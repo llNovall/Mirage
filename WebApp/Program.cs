@@ -1,4 +1,14 @@
+using EFDataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options =>
+    {
+        options.UseSqlServer(connectionString: builder.Configuration["DbMirage"]);
+    }
+);
 
 // Add services to the container.
 builder.Services.AddMvc();
