@@ -3,7 +3,35 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+
+<div class="row justify-content-end text-center text-md-end">
+   
+
+
+
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 col-xl-2 mb-2 mb-sm-2 mb-md-0 mb-lg-0 pe-md-0">
+                <p>Signed In as @UserManager.GetUserName(User)</p>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 ps-md-0">
+            <a class="btn btn-sm btn-primary">Logout</a>
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 col-xl-2 mb-2 mb-sm-2 mb-md-0 mb-lg-0 pe-md-0">
+                <a class="btn btn-sm btn-secondary" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 ps-md-0">
+            <a class="btn btn-sm btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
+        </div>
+    }
+}
+
+</div>
+@*<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
@@ -24,4 +52,4 @@ else
         <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-</ul>
+</ul>*@
