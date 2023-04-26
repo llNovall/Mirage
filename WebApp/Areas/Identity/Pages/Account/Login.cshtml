@@ -1,0 +1,50 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+   
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-sm-9 col-md-5 col-lg-4 col-xl-3 border border-3 rounded-2 border-dark-subtle pt-3 px-3 bg-primary-subtle bg-gradient">
+
+        <form id="loginForm" method="post">
+
+            <div class="mb-3">
+                <h2>Log-In</h2>
+                <hr />
+                <div class="text-warning-emphasis" asp-validation-summary="All"></div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Username" class="col-form-label"></label>
+                <input class="form-control form-control-sm" asp-for="Input.Username" />
+                @*<span class="text-warning-emphasis" asp-validation-for="Input.Username"></span>*@
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="col-form-label"></label>
+                <input class="form-control form-control-sm" asp-for="Input.Password" />
+                @*<span class="text-warning-emphasis" asp-validation-for="Input.Password"></span>*@
+            </div>
+
+            <div class="row justify-content-center mb-3">
+                <div class="col-5">
+                    <button class="btn btn-sm btn-primary w-100" type="submit">Login</button>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div class="mb-2 text-center">
+            <a asp-area="Identity" asp-page="/Account/Register">Don't have an account?</a>
+        </div>
+        <div class="mb-3 text-center">
+            <a asp-area="Identity" asp-page="/Account/ForgotPassword">Forgot password?</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
