@@ -9,7 +9,7 @@ namespace Domain.Repositories
 {
     public interface ITagRepository : IRepository<Tag>
     {
-        Task<IList<Post>> GetPostsByTagAsync(string tagName);
+        Task<IList<BlogPost>> GetPostsByTagAsync(string tagName);
 
         Task<int> GetTotalPostsByTagAsync(string tagName);
     }

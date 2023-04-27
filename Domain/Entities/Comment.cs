@@ -19,6 +19,6 @@ namespace Domain.Entities
         [Required]
         public Guid AuthorId { get; set; }
 
-        public Post Post { get; set; } = null!;
+        public BlogPost BlogPost { get; set; } = null!;
     }
 }

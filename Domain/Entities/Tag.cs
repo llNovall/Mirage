@@ -19,6 +19,6 @@ namespace Domain.Entities
         [StringLength(maximumLength: 200)]
         public string? TagDescription { get; set; }
 
-        public IList<Post> Posts { get; set; } = new List<Post>();
+        public IList<BlogPost> BlogPosts { get; set; } = new List<BlogPost>();
     }
 }

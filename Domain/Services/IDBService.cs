@@ -9,7 +9,7 @@ namespace Domain.Services
 {
     public interface IDBService
     {
-        IPostRepository PostRepository { get; }
+        IBlogPostRepository PostRepository { get; }
         ICommentRepository CommentRepository { get; }
         ITagRepository TagRepository { get; }
     }

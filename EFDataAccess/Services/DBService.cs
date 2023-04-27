@@ -14,18 +14,18 @@ namespace EFDataAccess.Services
 {
     public class DBService : IDBService
     {
-        private readonly IPostRepository _postRepository;
+        private readonly IBlogPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly ITagRepository _tagRepository;
 
         public DBService(ApplicationDbContext context)
         {
-            _postRepository = new PostRepository(context);
+            _postRepository = new BlogPostRepository(context);
             _commentRepository = new CommentRepository(context);
             _tagRepository = new TagRepository(context);
         }
 
-        public IPostRepository PostRepository
+        public IBlogPostRepository PostRepository
         { get { return _postRepository; } }
 
         public ICommentRepository CommentRepository

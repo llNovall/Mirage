@@ -23,7 +23,7 @@ namespace EFDataAccess.Repositories
 
         public T? Find(Expression<Func<T, bool>> predicate) => _context.Set<T>().Where(predicate).FirstOrDefault();
 
-        public T? FindById(string id) => _context.Set<T>().Find(id);
+        public T? FindById(string id) => _context.Set<T>().Find(Guid.Parse(id));
 
         public T? FindById(Guid id) => _context.Set<T>().Find(id.ToString());
 
@@ -31,7 +31,7 @@ namespace EFDataAccess.Repositories
 
         public async Task<T?> FindByIdAsync(Guid id) => await _context.Set<T>().FindAsync(id.ToString());
 
-        public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(id);
+        public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(Guid.Parse(id));
 
         public IEnumerable<T> GetAll() => _context.Set<T>();
 

@@ -16,17 +16,17 @@ namespace EFDataAccess.Repositories
         {
         }
 
-        public async Task<IList<Post>> GetPostsByTagAsync(string tagName)
+        public async Task<IList<BlogPost>> GetPostsByTagAsync(string tagName)
         {
             if (string.IsNullOrEmpty(tagName))
-                return new List<Post>();
+                return new List<BlogPost>();
 
-            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.Posts).FirstOrDefaultAsync();
+            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.BlogPosts).FirstOrDefaultAsync();
 
             if (tag == null)
-                return new List<Post>();
+                return new List<BlogPost>();
 
-            return tag.Posts;
+            return tag.BlogPosts;
         }
 
         public async Task<int> GetTotalPostsByTagAsync(string tagName)
@@ -34,12 +34,12 @@ namespace EFDataAccess.Repositories
             if (string.IsNullOrEmpty(tagName))
                 return 0;
 
-            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.Posts).FirstOrDefaultAsync();
+            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.BlogPosts).FirstOrDefaultAsync();
 
             if (tag == null)
                 return 0;
 
-            return tag.Posts.Count;
+            return tag.BlogPosts.Count;
         }
     }
 }

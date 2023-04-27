@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Post : BaseEntity, IAuthorable
+    public class BlogPost : BaseEntity, IAuthorable
     {
         [StringLength(maximumLength: 100, MinimumLength = 10)]
         public string Title { get; set; } = null!;
@@ -17,7 +17,7 @@ namespace Domain.Entities
         public string BodyContent { get; set; } = null!;
 
         [DataType(DataType.DateTime)]
-        public DateTime PostedOn { get; set; }
+        public DateTime PostedOn { get; set; } = DateTime.Now;
 
         [Required]
         public Guid AuthorId { get; set; }
