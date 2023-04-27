@@ -43,6 +43,12 @@ namespace WebApp.Controllers.Blog
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(BlogCreateModel model)
         {
+            if (model.TagsList.Count(c => c.IsChecked == true) == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Must select at least 1 tag.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 List<TagCheckItem> checkedTags = model.TagsList.Where(tag => tag.IsChecked).ToList();
