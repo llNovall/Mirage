@@ -1,0 +1,116 @@
+﻿@model PostCreateModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-12 mb-3">
+            <form method="post" id="blogPost">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="mt-3">
+                            <h2 class="small-caps">Create Blog</h2>
+                            <hr class="border-2" />
+                        </div>
+
+                        <div class="text-warning-emphasis" asp-validation-summary="All"></div>
+
+                        <div class="mb-2">
+                            <label class="form-label d-block bg-primary text-white ps-2 fs-4 small-caps m-0" asp-for="Title"></label>
+                            <input class="rounded-0 form-control" asp-for="Title" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label d-block bg-primary text-white ps-2 fs-4 small-caps m-0" asp-for="BodyContent"></label>
+                            <textarea class="form-control rounded-0" asp-for="BodyContent"></textarea>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label d-block bg-primary text-white ps-2 fs-4 small-caps m-0" asp-for="TagsList"></label>
+                            <div>
+                                <div class="row mx-0 bg-white text-black  overflow-y-scroll" style="max-height:100px;">
+                                    @{
+
+                                        for (int i = 0; i < Model.TagsList.Count; i++)
+                                        {
+                                            <div class="col-lg-3 col-6">
+                                                <input type="checkbox" asp-for="@Model.TagsList[i].IsChecked">
+                                                <label asp-for="@Model.TagsList[i].IsChecked">@Model.TagsList[i].TagName</label>
+                                                <input type="hidden" asp-for="@Model.TagsList[i].TagId">
+                                                <input type="hidden" asp-for="@Model.TagsList[i].TagName">
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="row justify-content-end">
+                                <div class="col col-md-4">
+                                    <button class="btn btn-primary w-100" type="submit" asp-action="Create" asp-controller="Post" value="Submit">Post</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Blog Sidebar navigation -Start- -->
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="ms-auto col-lg-11">
+                <partial name="_SidebarBlogNavigationPartial" />
+            </div>
+            
+        </div>
+
+        <!-- Blog Sidebar navigation -End- -->
+
+
+    </div>
+</div>
+
+<script src="~/lib/tinymce/tinymce.min.js"></script>
+<script>
+
+    tinymce.init(
+        {
+            selector: '#BodyContent',
+            promotion: false,
+            plugins: 'image',
+            skin:'tinymce-5',
+            file_picker_types: 'image',
+            file_picker_callback: (callback, value, meta) => {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/png, image/jpeg, image/jpg');
+
+                input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+
+                    reader.addEventListener('load', () => {
+                        const id = 'blobid' + (new Date()).getTime();
+                        const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        const base64 = reader.result.split(',')[1];
+                        const blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        /* call the callback and populate the Title field with the file name */
+                        callback(blobInfo.blobUri(), { title: file.name });
+                    });
+                    reader.readAsDataURL(file);
+                });
+
+                input.click();
+            }
+
+
+
+        }
+    );
+
+</script>

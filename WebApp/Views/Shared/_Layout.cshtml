@@ -6,12 +6,13 @@
     <title>Mirage - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="bg-dark-subtle bg-gradient">
 
-    <nav class="navbar navbar-expand-md bg-primary-subtle border-bottom border border-dark-subtle sticky-top">
+    <nav class="navbar navbar-expand-md bg-primary bg-gradient border-bottom border-2 border-dark-subtle sticky-top text-white">
         <div class="container">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Home"><img class="img-fluid" src="https://placehold.co/50x50" />Mirage</a>
+            <a class="navbar-brand text-white" asp-action="Index" asp-controller="Home"><img class="img-fluid" src="https://placehold.co/50x50" />Mirage</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="true" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,18 +21,18 @@
             <div id="main-nav" class="collapse navbar-collapse row">
 
 
-                <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 nav-item">
+                <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9">
                     <div class="row text-center">
                         <div class="col-sm-12 col-md-3 col-lg-1 mb-1 mb-md-0">
                             <a asp-action="Index" asp-controller="Home" class="nav-link">Blog</a>
                         </div>
 
                         <!-- Products Dropdown -Start- -->
-                        <div class="col-md-3 col-lg-1 me-lg-5 dropdown d-none d-sm-none d-md-block">
+                        <div class="col-sm-12 col-md-3 col-lg-1 me-lg-5 dropdown d-none d-sm-none d-md-block">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Products</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Discord Bot</a></li>
+                                <li><a class="dropdown-item" href="#">YouTube Video Downloader</a></li>
 
                             </ul>
                         </div>
@@ -40,8 +41,8 @@
                         <div class="col-sm-12 d-block d-md-none mb-1 mb-md-0">
                             <a class="nav-link" role="button" href="#products" data-bs-toggle="collapse">Products <i class="bi bi-chevron-down"></i></a>
                             <div id="products" class="collapse">
-                                <a class="dropdown-item">A</a>
-                                <a class="dropdown-item">B</a>
+                                <a class="dropdown-item" href="#">Discord Bot</a>
+                                <a class="dropdown-item" href="#">YouTube Video Downloader</a>
                             </div>
                         </div>
                         <!-- Products Collapse -End- -->
@@ -54,30 +55,6 @@
                 <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
                     <partial name="_LoginPartial" />
                 </div>
-
-
-                @*<ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link">Blog</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Discord Bot</a></li>
-                            <li><a class="dropdown-item" href="#">YouTube Video Downloader</a></li>
-                        </ul>
-
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-secondary">Sign Up</a>
-                    </li>
-
-                </ul>*@
             </div>
         </div>
     </nav>
@@ -88,14 +65,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-dark-subtle border-top footer text-muted bg-primary-subtle">
         <div class="container">
             &copy; 2023 - WebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
