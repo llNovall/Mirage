@@ -23,7 +23,7 @@ namespace Domain.Repositories
 
         public Task<T?> FindAsync(Expression<Func<T, bool>> predicate);
 
-        public IEnumerable<T> GetAll();
+        public Task<IList<T>> GetAllAsync();
 
         #endregion GET Methods
 

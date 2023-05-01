@@ -12,5 +12,7 @@ namespace Domain.Repositories
         Task<BlogPost?> FindByIdIncludeNavigationAsync(Guid id);
 
         Task<BlogPost?> FindByIdIncludeNavigationAsync(string id);
+
+        Task<IList<BlogPost>> FindAllBlogPostsIncludingNavigationAsync();
     }
 }

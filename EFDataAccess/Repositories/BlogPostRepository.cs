@@ -16,6 +16,9 @@ namespace EFDataAccess.Repositories
         {
         }
 
+        public async Task<IList<BlogPost>> FindAllBlogPostsIncludingNavigationAsync()
+            => await _context.BlogPosts.Include(c => c.Tags).Include(c => c.Comments).ToListAsync();
+
         public async Task<BlogPost?> FindByIdIncludeNavigationAsync(Guid id)
         {
             BlogPost? blogPost = await _context.BlogPosts.Include(c => c.Tags).Include(c => c.Comments).FirstOrDefaultAsync(c => c.Id == id);

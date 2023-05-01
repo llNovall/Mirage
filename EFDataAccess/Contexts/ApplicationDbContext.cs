@@ -19,26 +19,77 @@ namespace EFDataAccess.Contexts
         {
             Random random = new Random();
 
-            if (!Tags.Any())
+            if (!BlogPosts.Any() | !Tags.Any())
             {
+                List<Tag> tags = new List<Tag>();
+
                 for (int i = 0; i < 10; i++)
                 {
-                    string description = "Et ipsum sed et dolores in sadipscing ipsum lobortis no at sanctus imperdiet et et tempor justo dolore dolore eos voluptua doming gubergren enim tempor dolor in lorem zzril exerci minim dolor rebum erat magna elitr dolores nonumy sea rebum et kasd aliquip commodo sea consequat sed no dolore vero sadipscing sit diam in elitr suscipit duis feugiat sit eos ut diam gubergren lorem erat sed gubergren amet amet diam justo aliquyam facilisis duo sed ea consetetur kasd nisl sanctus nisl illum magna sed ea ipsum ea et in te ipsum consequat sadipscing qui facilisis elitr vero ipsum justo esse invidunt gubergren eu clita est clita laoreet invidunt et diam kasd luptatum at exerci dolor aliquam esse facilisis dolores delenit et assum kasd consectetuer elitr labore accusam consetetur et dolore nonumy et quis accusam et eum dolor no invidunt ipsum voluptua erat takimata clita gubergren diam kasd labore magna consetetur iusto ea dolor ut no consequat et dolor justo accusam elitr sed sed duo eirmod consectetuer diam lorem facilisis erat erat dolore vulputate et eirmod dolor adipiscing duo dolor nonumy sanctus invidunt dolor consetetur clita ipsum at est clita et amet est eos rebum sea ut kasd eirmod vero zzril";
-
-                    int startIndex = random.Next(20, 100);
-                    int endIndex = random.Next(startIndex + 5, startIndex + 100);
-                    Tag tag = new Tag()
+                    Tag tag = new Tag
                     {
                         Id = Guid.NewGuid(),
-                        TagName = $"Tag - {i}",
-                        TagDescription = $"{description.Substring(startIndex, endIndex)}",
+                        TagDescription = string.Join(" ", Faker.Lorem.Words(10)),
                         AuthorId = Guid.NewGuid(),
+                        TagName = Faker.Name.Last()
                     };
 
-                    Tags.Add(tag);
+                    tags.Add(tag);
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    BlogPost blogPost = new BlogPost()
+                    {
+                        AuthorId = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
+                        Tags = tags.Take(random.Next(3, 10)).ToList(),
+                        Title = string.Join(" ", Faker.Lorem.Words(5)),
+                        BodyContent = string.Join(" ", Faker.Lorem.Words(200)),
+                    };
+
+                    int numParentComments = random.Next(1, 5);
+
+                    for (int m = 0; m < numParentComments; m++)
+                    {
+                        Comment comment = new Comment();
+                        comment.Id = Guid.NewGuid();
+                        comment.AuthorId = Guid.NewGuid();
+                        comment.BodyContent = string.Join(" ", Faker.Lorem.Words(20));
+                        comment.BlogPost = blogPost;
+
+                        int branches = random.Next(1, 3);
+
+                        CreateFakeComments(5, 1, 5, blogPost, comment);
+
+                        blogPost.Comments.Add(comment);
+                    }
+
+                    BlogPosts.Add(blogPost);
                 }
 
                 SaveChanges();
+            }
+        }
+
+        private void CreateFakeComments(int branch, int minComment, int maxComment, BlogPost blogPost, Comment parent)
+        {
+            if (branch <= 0)
+                return;
+
+            Random random = new Random();
+            int numComments = random.Next(minComment, maxComment);
+
+            for (int i = 0; i < numComments; i++)
+            {
+                Comment comment = new Comment();
+                comment.Id = Guid.NewGuid();
+                comment.AuthorId = Guid.NewGuid();
+                comment.BodyContent = string.Join(" ", Faker.Lorem.Words(20));
+                comment.BlogPost = blogPost;
+
+                parent.Replies.Add(comment);
+                branch--;
+                CreateFakeComments(branch, minComment, maxComment, blogPost, comment);
             }
         }
     }

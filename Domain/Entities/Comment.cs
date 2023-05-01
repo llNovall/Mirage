@@ -14,11 +14,13 @@ namespace Domain.Entities
         public string BodyContent { get; set; } = null!;
 
         [DataType(DataType.DateTime)]
-        public DateTime PostedOn { get; set; }
+        public DateTime PostedOn { get; set; } = DateTime.Now;
 
         [Required]
         public Guid AuthorId { get; set; }
 
         public BlogPost BlogPost { get; set; } = null!;
+
+        public IList<Comment> Replies { get; set; } = new List<Comment>();
     }
 }

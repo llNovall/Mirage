@@ -1,6 +1,7 @@
 ﻿using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace EFDataAccess.Repositories
 
         public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(Guid.Parse(id));
 
-        public IEnumerable<T> GetAll() => _context.Set<T>();
+        public async Task<IList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 
         #endregion GET Methods
 
