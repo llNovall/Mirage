@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface ICommentRepository : IRepository<Comment>
+    public interface ICommentRepository : IRepository<Comment>, IFind<Comment>
     {
-        Task<IEnumerable<Comment>> GetCommentsByUserAsync(Guid userId);
-
-        Task<IEnumerable<Comment>> GetCommentsByUserAsync(string userId);
+        Task<IList<Comment>> GetAllAsync(Guid blogId);
     }
 }

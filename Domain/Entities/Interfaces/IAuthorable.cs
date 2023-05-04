@@ -8,6 +8,7 @@ namespace Domain.Entities.Interfaces
 {
     public interface IAuthorable
     {
-        Guid AuthorId { get; set; }
+        string AuthorId { get; set; }
+        Author Author { get; set; }
     }
 }

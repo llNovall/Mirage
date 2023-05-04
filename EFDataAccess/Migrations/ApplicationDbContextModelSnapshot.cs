@@ -24,27 +24,42 @@ namespace EFDataAccess.Migrations
 
             modelBuilder.Entity("BlogPostTag", b =>
                 {
-                    b.Property<Guid>("BlogPostsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("BlogPostsId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("TagsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TagsId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BlogPostsId", "TagsId");
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("BlogPostTag", (string)null);
+                    b.ToTable("BlogPostTag");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Author", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("Domain.Entities.BlogPost", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BodyContent")
                         .IsRequired()
@@ -61,51 +76,56 @@ namespace EFDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPosts", (string)null);
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("BlogPosts");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("BlogPostId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("BlogId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BodyContent")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("CommentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ParentCommentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PostedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlogPostId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("CommentId");
+                    b.HasIndex("BlogId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.HasIndex("ParentCommentId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TagDescription")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -116,7 +136,9 @@ namespace EFDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -326,29 +348,61 @@ namespace EFDataAccess.Migrations
                     b.HasOne("Domain.Entities.BlogPost", null)
                         .WithMany()
                         .HasForeignKey("BlogPostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.BlogPost", b =>
+                {
+                    b.HasOne("Domain.Entities.Author", "Author")
+                        .WithMany("Posts")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("Domain.Entities.BlogPost", "BlogPost")
+                    b.HasOne("Domain.Entities.Author", "Author")
                         .WithMany("Comments")
-                        .HasForeignKey("BlogPostId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Comment", null)
+                    b.HasOne("Domain.Entities.BlogPost", "BlogPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Comment", "ParentComment")
                         .WithMany("Replies")
-                        .HasForeignKey("CommentId");
+                        .HasForeignKey("ParentCommentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Author");
 
                     b.Navigation("BlogPost");
+
+                    b.Navigation("ParentComment");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Tag", b =>
+                {
+                    b.HasOne("Domain.Entities.Author", "Author")
+                        .WithMany("Tags")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -400,6 +454,15 @@ namespace EFDataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Author", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Posts");
+
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("Domain.Entities.BlogPost", b =>

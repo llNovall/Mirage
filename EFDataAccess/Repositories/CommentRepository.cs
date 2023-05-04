@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,8 +17,14 @@ namespace EFDataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsByUserAsync(Guid userId) => await _context.Comments.Where(c => c.AuthorId == userId).ToListAsync();
+        public async Task<Comment?> FindAsync(Expression<Func<Comment, bool>> predicate) => await _context.Comments.Where(predicate).Include(c => c.Replies).Include(c => c.BlogPost).FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<Comment>> GetCommentsByUserAsync(string userId) => await _context.Comments.Where(c => c.AuthorId == Guid.Parse(userId)).ToListAsync();
+        public async Task<Comment?> FindByIdAsync(Guid id) => await _context.Comments.Where(c => c.Id == id.ToString()).Include(c => c.Replies).Include(c => c.BlogPost).FirstOrDefaultAsync();
+
+        public async Task<Comment?> FindByIdAsync(string id) => await _context.Comments.Where(c => c.Id == id).Include(c => c.Replies).Include(c => c.BlogPost).Include(c => c.Author).FirstOrDefaultAsync();
+
+        public async Task<IList<Comment>> GetAllAsync(Guid blogId) => await _context.Comments.Where(c => c.BlogId == blogId.ToString()).Include(c => c.Replies).Include(c => c.BlogPost).Include(c => c.Author).ToListAsync();
+
+        public async Task<IList<Comment>> GetAllAsync() => await _context.Comments.Include(c => c.Replies).Include(c => c.BlogPost).Include(c => c.Author).ToListAsync();
     }
 }

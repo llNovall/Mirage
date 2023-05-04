@@ -9,7 +9,7 @@ namespace Domain.Entities
 {
     public abstract class BaseEntity
     {
-        [Required]
-        public Guid Id { get; set; }
+        [Key]
+        public string Id { get; set; } = null!;
     }
 }

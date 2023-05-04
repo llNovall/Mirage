@@ -17,12 +17,14 @@ namespace EFDataAccess.Services
         private readonly IBlogPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly IAuthorRepository _authorRepository;
 
         public DBService(ApplicationDbContext context)
         {
             _postRepository = new BlogPostRepository(context);
             _commentRepository = new CommentRepository(context);
             _tagRepository = new TagRepository(context);
+            _authorRepository = new AuthorRepository(context);
         }
 
         public IBlogPostRepository PostRepository
@@ -33,5 +35,8 @@ namespace EFDataAccess.Services
 
         public ITagRepository TagRepository
         { get { return _tagRepository; } }
+
+        public IAuthorRepository AuthorRepository
+        { get { return _authorRepository; } }
     }
 }

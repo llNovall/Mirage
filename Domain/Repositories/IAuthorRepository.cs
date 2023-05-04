@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface IBlogPostRepository : IRepository<BlogPost>, IFind<BlogPost>
+    public interface IAuthorRepository : IRepository<Author>, IFind<Author>
     {
     }
 }

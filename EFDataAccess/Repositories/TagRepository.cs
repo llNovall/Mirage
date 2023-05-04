@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,15 @@ namespace EFDataAccess.Repositories
         public TagRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+        public async Task<Tag?> FindAsync(Expression<Func<Tag, bool>> predicate) => await _context.Tags.Where(predicate).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+
+        public async Task<Tag?> FindByIdAsync(Guid id) => await _context.Tags.Where(c => c.Id == id.ToString()).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+
+        public async Task<Tag?> FindByIdAsync(string id) => await _context.Tags.Where(c => c.Id == id).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+
+        public async Task<IList<Tag>> GetAllAsync()
+            => await _context.Tags.Include(c => c.BlogPosts).Include(c => c.Author).ToListAsync();
 
         public async Task<IList<BlogPost>> GetPostsByTagAsync(string tagName)
         {

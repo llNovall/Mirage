@@ -51,32 +51,15 @@ namespace EFDataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
+                name: "Authors",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    BodyContent = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
-                    PostedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TagName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    TagDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,8 +108,8 @@ namespace EFDataAccess.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -170,8 +153,8 @@ namespace EFDataAccess.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -186,48 +169,98 @@ namespace EFDataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
+                name: "BlogPosts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BodyContent = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    BodyContent = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     PostedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
+                        name: "FK_BlogPosts_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostTag",
+                name: "Tags",
                 columns: table => new
                 {
-                    PostsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TagsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TagName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    TagDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostTag", x => new { x.PostsId, x.TagsId });
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PostTag_Posts_PostsId",
-                        column: x => x.PostsId,
-                        principalTable: "Posts",
+                        name: "FK_Tags_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BodyContent = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    PostedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BlogId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ParentCommentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PostTag_Tags_TagsId",
+                        name: "FK_Comments_BlogPosts_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_ParentCommentId",
+                        column: x => x.ParentCommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BlogPostTag",
+                columns: table => new
+                {
+                    BlogPostsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TagsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogPostTag", x => new { x.BlogPostsId, x.TagsId });
+                    table.ForeignKey(
+                        name: "FK_BlogPostTag_BlogPosts_BlogPostsId",
+                        column: x => x.BlogPostsId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BlogPostTag_Tags_TagsId",
                         column: x => x.TagsId,
                         principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -270,14 +303,34 @@ namespace EFDataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostId",
-                table: "Comments",
-                column: "PostId");
+                name: "IX_BlogPosts_AuthorId",
+                table: "BlogPosts",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostTag_TagsId",
-                table: "PostTag",
+                name: "IX_BlogPostTag_TagsId",
+                table: "BlogPostTag",
                 column: "TagsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AuthorId",
+                table: "Comments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_BlogId",
+                table: "Comments",
+                column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ParentCommentId",
+                table: "Comments",
+                column: "ParentCommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_AuthorId",
+                table: "Tags",
+                column: "AuthorId");
         }
 
         /// <inheritdoc />
@@ -299,10 +352,10 @@ namespace EFDataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "BlogPostTag");
 
             migrationBuilder.DropTable(
-                name: "PostTag");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -311,10 +364,13 @@ namespace EFDataAccess.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "BlogPosts");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
         }
     }
 }

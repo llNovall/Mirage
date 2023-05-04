@@ -12,5 +12,6 @@ namespace Domain.Services
         IBlogPostRepository PostRepository { get; }
         ICommentRepository CommentRepository { get; }
         ITagRepository TagRepository { get; }
+        IAuthorRepository AuthorRepository { get; }
     }
 }

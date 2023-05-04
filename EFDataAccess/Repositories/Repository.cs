@@ -22,19 +22,19 @@ namespace EFDataAccess.Repositories
 
         #region GET Methods
 
-        public T? Find(Expression<Func<T, bool>> predicate) => _context.Set<T>().Where(predicate).FirstOrDefault();
+        //public T? Find(Expression<Func<T, bool>> predicate) => _context.Set<T>().Where(predicate).FirstOrDefault();
 
-        public T? FindById(string id) => _context.Set<T>().Find(Guid.Parse(id));
+        //public T? FindById(string id) => _context.Set<T>().Find(Guid.Parse(id));
 
-        public T? FindById(Guid id) => _context.Set<T>().Find(id.ToString());
+        //public T? FindById(Guid id) => _context.Set<T>().Find(id.ToString());
 
-        public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().Where(predicate).FirstOrDefaultAsync();
+        //public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().Where(predicate).FirstOrDefaultAsync();
 
-        public async Task<T?> FindByIdAsync(Guid id) => await _context.Set<T>().FindAsync(id.ToString());
+        //public async Task<T?> FindByIdAsync(Guid id) => await _context.Set<T>().FindAsync(id);
 
-        public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(Guid.Parse(id));
+        //public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(Guid.Parse(id));
 
-        public async Task<IList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
+        //public async Task<IList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 
         #endregion GET Methods
 
