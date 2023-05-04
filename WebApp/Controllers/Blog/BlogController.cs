@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebApp.Models.Blog;
 
 namespace WebApp.Controllers.Blog
@@ -8,28 +10,43 @@ namespace WebApp.Controllers.Blog
     public class BlogController : Controller
     {
         private readonly IDBService _db;
+        private readonly IUserStore<IdentityUser> _userStore;
         private readonly ILogger<BlogController> _logger;
         private readonly EventId _eventId;
 
-        public BlogController(IDBService dBService, ILogger<BlogController> logger)
+        public BlogController(IDBService dBService, ILogger<BlogController> logger, IUserStore<IdentityUser> userStore)
         {
             _db = dBService;
             _logger = logger;
             _eventId = new EventId(200, name: "PostController");
+            _userStore = userStore;
         }
 
         public async Task<IActionResult> Index(string blogPostId)
         {
-            BlogPost? blogPost = await _db.PostRepository.FindByIdIncludeNavigationAsync(blogPostId);
+            BlogIndexModel model = new BlogIndexModel();
+            BlogPost? blogPost = await _db.PostRepository.FindByIdAsync(blogPostId);
+            IList<Comment> comments = await _db.CommentRepository.GetAllAsync(Guid.Parse(blogPostId));
 
-            return View(blogPost);
+            model.Comments = comments;
+            model.BlogPost = blogPost;
+
+            if (blogPost != null)
+            {
+                model.CommentCreate = new CommentCreateModel
+                {
+                    BlogId = blogPost.Id
+                };
+            }
+
+            return View(model);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             _logger.LogDebug(_eventId, "Displaying view to create post.");
             BlogCreateModel model = new();
-            List<Tag> tags = _db.TagRepository.GetAll().ToList();
+            IList<Tag> tags = await _db.TagRepository.GetAllAsync();
 
             foreach (Tag tag in tags)
             {
@@ -52,19 +69,19 @@ namespace WebApp.Controllers.Blog
             if (ModelState.IsValid)
             {
                 List<TagCheckItem> checkedTags = model.TagsList.Where(tag => tag.IsChecked).ToList();
-                List<Tag> tags = _db.TagRepository.GetAll().ToList();
+                IList<Tag> tags = await _db.TagRepository.GetAllAsync();
 
-                List<Guid> tagIds = new();
+                List<string> tagIds = new();
 
-                checkedTags.Select(c => c.TagId).ToList().ForEach(c => tagIds.Add(Guid.Parse(c)));
+                checkedTags.Select(c => c.TagId).ToList().ForEach(c => tagIds.Add(c));
 
                 List<Tag> selectedTags = tags.Where(c => tagIds.Contains(c.Id)).ToList();
 
                 BlogPost blogPost = new()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = model.Title,
-                    AuthorId = Guid.NewGuid(),
+                    AuthorId = Guid.NewGuid().ToString(),
                     BodyContent = model.BodyContent,
                     Tags = selectedTags,
                 };

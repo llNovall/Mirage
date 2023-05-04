@@ -1,0 +1,60 @@
+﻿@model CommentReplyModel
+
+<div class="modal fade" id="replyCommentModal" tabindex="-1" aria-labelledby="replyCommentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Replying to </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form method="post">
+
+            
+                <div class="modal-body">
+                    <div>
+                        <p>Their Message</p>
+                        <input type="hidden" asp-for="ReplyCommentId" />
+                        <p class="overflow-y-scroll message">A long message</p>
+                    </div>
+                    <hr />
+                    <div>
+                        <p>Your Reply</p>
+
+                        <textarea class="form-control" asp-for="BodyContent"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" asp-action="ReplyComment" asp-route-returnUrl="@Context.Request.GetEncodedUrl()" asp-controller="Comment">Reply</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    const replyModal = document.getElementById('replyCommentModal')
+    if (replyModal) {
+        replyModal.addEventListener('show.bs.modal', event => {
+
+            const button = event.relatedTarget
+
+            const authorName = button.getAttribute('data-bs-authorName')
+            const comment = button.getAttribute('data-bs-comment')
+            const replyCommentId = button.getAttribute('data-bs-replyCommentId')
+
+            const modalTitle = replyModal.querySelector('.modal-title')
+            const modalBodyInput = replyModal.querySelector('.message')
+            const replyCommentIdInput = replyModal.querySelector('#ReplyCommentId')
+
+            modalTitle.textContent = `Replying to ${authorName}`
+            modalBodyInput.textContent = comment
+            replyCommentIdInput.value = replyCommentId
+        })
+    }
+</script>

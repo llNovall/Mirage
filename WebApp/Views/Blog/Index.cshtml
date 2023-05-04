@@ -1,0 +1,204 @@
+﻿@model BlogIndexModel
+@{
+    if (Model.BlogPost == null)
+    {
+        <partial name="_BlogPostRetrievalError" />
+        return;
+    }
+}
+
+<!-- Tags / Edit -Start- -->
+
+<div class="row justify-content-center">
+    <div class="col-11">
+        <div class="overflow-y-auto text-center" style="max-height:30px;min-height:30px;">
+            @{
+                if (Model.BlogPost.Tags != null)
+                {
+                    for (int i = 0; i < Model.BlogPost.Tags.Count; i++)
+                    {
+                        <a class="link-secondary link-offset-3-hover" href="#">@Model.BlogPost.Tags[i].TagName</a>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+
+    @{
+        var blogEditResult = await AuthorizationService.AuthorizeAsync(User, Model.BlogPost, "BlogEdit");
+
+        if (blogEditResult.Succeeded)
+        {
+            <div class="col-1">
+                <a class="btn btn-sm btn-primary text-white border-1 border-dark" asp-action="Edit" asp-controller="Blog" asp-route-blogPostId="@Model.BlogPost.Id">Edit</a>
+            </div>
+        }
+    }
+
+</div>
+<!-- Tags / Edit -End- -->
+
+<!-- Title -Start- -->
+<div class="row">
+    <div class="col">
+        <h2 class="text-break text-center">@Model.BlogPost.Title</h2>
+    </div>
+</div>
+<!-- Title -End- -->
+<!-- Posted Date / Author -Start- -->
+<div class="row">
+    <div class="col text-center">
+        <p class="fs-6 fw-light mb-0">@Model.BlogPost.PostedOn.ToString("MMMM dd, yyyy")</p>
+
+        @{
+            if (!string.IsNullOrEmpty(Model.BlogPost.Author?.Username))
+            {
+                //<p class="fs-6 fw-light"><a asp-action="Index" asp-controller="Author">@Model.BlogPost.Author.Username</a></p>
+                <p class="fs-6 fw-light"><a>@Model.BlogPost.Author.Username</a></p>
+                
+            }
+            else
+            {
+                <p class="fs-6 fw-light"><a href="#"> Anonymus</a></p>
+            }
+        }
+    </div>
+</div>
+<!-- Posted Date / Author -End- -->
+<!-- Blog Content -Start- -->
+<div class="row justify-content-center">
+    <div class="col-11 text-break border-top border-bottom border-2 border-dark pt-3">
+
+        @Html.Raw(Model.BlogPost.BodyContent)
+    </div>
+</div>
+<!-- Blog Content -End- -->
+
+
+<div class="row mt-3 justify-content-center">
+    <div class="col-5">
+        <div class="row text-center">
+            <div class="col">
+                <i class="bi bi-moon-stars-fill text-warning"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-moon-stars-fill text-warning"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-moon-stars-fill text-warning"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-moon-stars-fill text-warning"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-moon-stars-fill text-warning"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col">
+        <h3 class="fs-4 border-2 border-bottom border-dark py-2">Comments</h3>
+        <partial name="_CommentCreateFormPartial" model="@Model.CommentCreate"/>
+        <hr class="border border-1 border-dark">
+        @functions {
+
+            public async Task ShowTree(IList<Comment> comments, int colIndex, Comment? parent)
+            {
+                if (colIndex <= 0)
+                    colIndex = 1;
+
+                for (int i = 0; i < comments.Count; i++)
+                {
+                    string colCur = $"col-{colIndex}";
+
+                    <div class="row justify-content-end">
+
+                        <div class="@colCur">
+                            <div class="row mb-2">
+                                <div class="col border border-2 border-dark">
+
+                                    <div class="row ">
+                                        <div class="col-6 p-0">
+                                            <p class="ps-2 bg-dark text-white">@comments[i].Author.Username</p>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <p class="pe-2 text-end bg-dark text-white">@comments[i].PostedOn.ToString("MMMM dd, yyyy") at @comments[i].PostedOn.ToString("H:mm:ss")</p>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        @comments[i].BodyContent
+                                    </p>
+
+                                    <div class="row mb-2 text-end">
+                                        <div class="col">
+                                            @{
+                                                var deleteResult = await AuthorizationService.AuthorizeAsync(User, comments[i], "CommentDelete");
+
+                                                if (deleteResult.Succeeded)
+                                                {
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteCommentModal" data-bs-commentId="@comments[i].Id" data-bs-authorId="@comments[i].AuthorId" data-bs-comment="@comments[i].BodyContent">Delete</a>
+                                                }
+                                            }
+
+                                            @{
+                                                var editResult = await AuthorizationService.AuthorizeAsync(User, comments[i], "CommentEdit");
+
+                                                if (editResult.Succeeded)
+                                                {
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editCommentModal" data-bs-commentId="@comments[i].Id" data-bs-authorId="@comments[i].AuthorId" data-bs-comment="@comments[i].BodyContent">Edit</a>
+                                                }
+                                            }
+
+                                            @{
+                                                var replyResult = await AuthorizationService.AuthorizeAsync(User, comments[i], "CommentReply");
+
+                                                if (replyResult.Succeeded)
+                                                {
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#replyCommentModal" data-bs-authorName="@comments[i].Author.Username" data-bs-comment="@comments[i].BodyContent" data-bs-replyCommentId="@comments[i].Id">Reply</a>
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @{
+                                await ShowTree(comments[i].Replies, colIndex - 1, comments[i]);
+                            }
+
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+
+        <div class="container">
+            @{
+                await ShowTree(Model.BlogPost.Comments.OrderByDescending(c=> c.PostedOn).ToList(), 12, null);
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- Reply Modal -Start- -->
+<partial name="_CommentReplyFormPartial" model="Model.CommentReply" />
+
+<!-- Reply Modal -End- -->
+<!-- Edit Comment Modal -Start- -->
+
+<partial name="_CommentEditFormPartial" model="Model.CommentEdit"/>
+
+<!-- Edit Comment -End- -->
+<!-- Delete Comment -Start -->
+<partial name="_CommentDeleteFormPartial" model="Model.CommentDelete" />
+<!-- Delete Comment -End -->
+

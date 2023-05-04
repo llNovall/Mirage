@@ -1,0 +1,32 @@
+﻿@model CommentCreateModel
+
+@{
+    var resultCreate = await AuthorizationService.AuthorizeAsync(User, "CommentCreate");
+
+    if (!resultCreate.Succeeded)
+    {
+        <p>You have to be logged in to comment!</p>
+        return;
+    }
+    
+}
+
+<div class="row">
+    <div class="col">
+        <p class="fs-5">Share your thoughts...</p>
+    </div>
+</div>
+<form method="post">
+    <div class="row mb-2">
+        <div class="col">
+            <input type="hidden" asp-for="BlogId"/>
+            <textarea class="form-control border-3" asp-for="BodyContent"></textarea>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col text-end">
+            <button class="btn btn-primary" type="submit" asp-action="PostComment" asp-route-returnUrl="@Context.Request.GetEncodedUrl()" asp-controller="Comment">Post Comment</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,51 @@
+﻿@model CommentEditModel
+
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div>
+                        <p>Your Message</p>
+                        <input class="commentId" type="hidden" asp-for="CommentId" />
+                        <input type="hidden" asp-for="AuthorId" />
+                        <textarea class="comment form-control" asp-for="BodyContent">Message</textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" asp-action="EditComment" asp-route-returnUrl="@Context.Request.GetEncodedUrl()" asp-controller="Comment">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    const editModal = document.getElementById('editCommentModal')
+    if (editModal) {
+        editModal.addEventListener('show.bs.modal', event => {
+
+            const button = event.relatedTarget
+
+            const commentid = button.getAttribute('data-bs-commentId')
+            const authorid = button.getAttribute('data-bs-authorId')
+            const comment = button.getAttribute('data-bs-comment')
+
+            const modalCommentInputHidden = editModal.querySelector('#CommentId')
+            const modalAuthorInputHidden = editModal.querySelector('#AuthorId')
+            const modalComment = editModal.querySelector('#BodyContent')
+
+
+            modalCommentInputHidden.value = commentid
+            modalAuthorInputHidden.value = authorid
+            modalComment.textContent = comment
+        })
+    }
+</script>

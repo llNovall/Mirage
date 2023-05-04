@@ -1,0 +1,50 @@
+﻿@model CommentEditModel
+
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div>
+                        <p>Your Message</p>
+                        <input type="hidden" asp-for="CommentId" />
+                        <input type="hidden" asp-for="AuthorId" />
+                        <textarea disabled class="comment form-control" asp-for="BodyContent">Message</textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" asp-action="DeleteComment" asp-route-returnUrl="@Context.Request.GetEncodedUrl()" asp-controller="Comment">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    const deleteModal = document.getElementById('deleteCommentModal')
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', event => {
+
+            const button = event.relatedTarget
+
+            const commentid = button.getAttribute('data-bs-commentid')
+            const authorid = button.getAttribute('data-bs-authorId')
+            const comment = button.getAttribute('data-bs-comment')
+
+            const modalCommentInputHidden = deleteModal.querySelector('#CommentId')
+            const modalDeleteAuthorInputHidden = deleteModal.querySelector('#AuthorId')
+            const modalComment = deleteModal.querySelector('#BodyContent')
+
+            modalCommentInputHidden.value = commentid
+            modalDeleteAuthorInputHidden.value = authorid
+            modalComment.value = comment
+        })
+    }
+</script>
