@@ -1,52 +1,36 @@
-﻿
+﻿@model BlogPost
 
-<div class="card">
-    <div class="card-header bg-primary" style="min-height:24px;">
-        
-@*
-        @{
-            Random random = new Random();
-            int numBadges = random.Next(1, 6);
+<div class="row">
+    <div class="col">
 
-            for (int i = 0; i < numBadges; i++)
-            {
-                <a class="btn btn-sm btn-secondary" href="#">Tag 1</a>
-            }
-        }*@
+        <div class="bg-dark p-0 border border-5 border-dark rounded-2 rounded-bottom-0"></div>
 
-        @*Tis thee that purple on velvet lady uncertain nothing be clasp this sign i explore living till and eyes or entreating leave fantastic tell shadow land no name said be
-        *@
-    </div>
-    <div class="card-body">
-        <div class="card-title">
-            <h5 class="overflow-hidden" style="max-height:70px">A title of something relating to something else</h5>
-        </div>
-        <div class="card-subtitle">
-            <small class="d-block">23 / 23 / 23</small>
-        </div>
-        <div class="overflow-y-auto" style="max-height:30px;min-height:30px;" >
-            @{
-                Random random = new Random();
-                int numBadges = random.Next(1, 6);
+        <div class="p-2 border border-1 border-top-0 border-dark">
+            <div class="card-title">
+                <h3 class="fs-5 text-break ">@Model.Title</h3>
+            </div>
+            <div class="card-subtitle">
+                <small class="d-block">@Model.PostedOn.ToString("MMMM dd, yyyy")</small>
+            </div>
 
-                for (int i = 0; i < numBadges; i++)
-                {
-                    <a class="link-secondary" href="#">Tagsdhshshshsh 1</a>
+            <div class="overflow-y-auto" style="max-height:30px;min-height:30px;">
+                @{
+                    if (Model.Tags != null)
+                    {
+                        for (int i = 0; i < Model.Tags.Count; i++)
+                        {
+                            <a class="link-secondary link-offset-3-hover" href="#">@Model.Tags[i].TagName</a>
+                        }
+                    }
                 }
-            }
-           
+
+            </div>
+
         </div>
-        <hr class="border-2" />
-        <div class="card-text overflow-y-auto lh-sm" style="min-height:70px; max-height:70px;">
-            All soul pondered sculptured rare soon came he came this door i many with then maiden never bird then a i sad gave entreating meant is melancholy not chamber gileadtell minute door this tapping this whether the implore the lenore on terrors lenore louder nothing i grim this the and the wondering its and i yore in clasp said terrors whose by and above of he ghastly entrance said floor one mystery lies and the angels then pallid take decorum this land chamber again and i grim door utters be curtain or the its to hope on then pallas in devil as to so no sought mortals name floor he said oer the craven land lenore a rapping flitting prophet terrors door aptly nothing cushioned there nothing bird me said at on its word said hauntedtell aptly or door stately leave my into ah unmerciful the flown stillness the heard an forget prophet that leave yet never the sitting darkness nepenthe sent or presently i napping entreating more if lies this and the hope maiden i linking its i stood bird quaff forget stately so he tapping demons whose nevermore whom his lenore i followed chamber whom was if stillness
-        </div>
-
     </div>
-
-    <div class="card-footer bg-secondary-subtle text-center text-white p-0">
-        <a class="btn d-block btn-secondary w-100 rounded-0" role="button">
-            READ MORE
-        </a>
+</div>
+<div class="row justify-content-end">
+    <div class="col-2 text-end">
+        <a class="btn btn-sm btn-primary text-white rounded-0 w-100 border-1 border-dark-subtle border-top-0" asp-action="Index" asp-controller="Blog" asp-route-blogPostId ="@Model.Id">Read More</a>
     </div>
-
 </div>

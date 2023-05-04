@@ -1,69 +1,71 @@
-﻿@{
+﻿@model HomeIndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-lg-9 col-md-12 col-12 mb-3">
-            <div class="row">
-                <div class="col">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h2 class="m-0 small-caps">List of Blogs</h2>
-                        </div>
-                        <div class="col text-end">
-                            <a class="btn btn-primary rounded-1 border-2 border-primary-subtle" asp-action="Create" asp-controller="Blog">Create Post</a>
-                        </div>
-
+<div class="row">
+    <div class="col-lg-9 col-md-12 col-12 mb-3">
+        <div class="row">
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="m-0 small-caps">List of Blogs</h2>
+                    </div>
+                    <div class="col text-end">
+                        <a class="btn btn-primary rounded-1 border-2 border-primary-subtle" asp-action="Create" asp-controller="Blog">Create Post</a>
                     </div>
 
-                    <hr class="border-2" />
                 </div>
 
-            </div>
-            <div class="row justify-content-start">
-
-                @{
-                    Random random = new Random();
-
-
-                    for (int i = 0; i < 13; i++)
-                    {
-                        string n = $"col-xl-{@random.Next(4, 6)}";
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-2">
-                            <partial name="_BlogPostItemHomePartial">
-                        </div>
-                    }
-                }
-
+                <hr class="border-2" />
             </div>
 
-            <div class="row">
-                <nav aria-label="Page navigation">
+        </div>
+        <div class="row justify-content-start">
 
-                    <div class="col">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
+            @{
+                for (int i = 0; i < Model.BlogPosts.Count; i++)
+                {
+                    //<div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-2">
+                    //    <partial name="_BlogPostItemHomePartial" model="Model.BlogPosts[i]">
+                    //</div>
+
+                    <div class="col-12 mb-2">
+                        <partial name="_BlogPostItemHomePartial" model="Model.BlogPosts[i]">
                     </div>
 
-                </nav>
-            </div>
+                }
+            }
 
         </div>
-        <!-- Blog Sidebar navigation -Start- -->
-        <div class="col-lg-3 col-md-12 col-12">
-            <div class="ms-auto col-lg-11">
-                <partial name="_SidebarBlogNavigationPartial" />
-            </div>
+
+        <div class="row">
+            <nav aria-label="Page navigation">
+
+                <div class="col">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </div>
+
+            </nav>
         </div>
 
-        <!-- Blog Sidebar navigation -End- -->
     </div>
 
+    <!-- Blog Sidebar navigation -Start- -->
+    <div class="col-lg-3 col-md-12 col-12">
+        <div class="ms-auto col-lg-11">
+            <partial name="_SidebarBlogNavigationPartial" />
+        </div>
+    </div>
+
+    <!-- Blog Sidebar navigation -End- -->
 </div>
+
