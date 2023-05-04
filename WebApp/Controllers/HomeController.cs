@@ -1,21 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApp.Models;
+using WebApp.Models.Home;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDBService _dbService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IDBService dBService)
         {
             _logger = logger;
+            _dbService = dBService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            HomeIndexViewModel model = new HomeIndexViewModel();
+            model.BlogPosts = await _dbService.PostRepository.GetAllAsync();
+            return View(model);
         }
 
         public IActionResult Privacy()
