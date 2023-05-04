@@ -10,6 +10,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Entities;
+using Domain.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -28,17 +30,20 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IDBService _dBService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IDBService dBService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _dBService = dBService;
         }
 
         [BindProperty]
@@ -57,6 +62,14 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                 if (resultUserManager.Succeeded)
                 {
+                    Author author = new Author
+                    {
+                        Id = user.Id,
+                        Username = user.UserName
+                    };
+
+                    await _dBService.AuthorRepository.AddAsync(author);
+
                     Microsoft.AspNetCore.Identity.SignInResult resultSignInManager = await _signInManager.PasswordSignInAsync(user: user,
                         password: Input.Password,
                         isPersistent: false,
