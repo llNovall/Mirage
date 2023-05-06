@@ -48,16 +48,16 @@ builder.Services.AddAuthorization(options =>
             new SameAuthorRequirement()));
 
     options.AddPolicy("CommentCreate", policy => policy.RequireAuthenticatedUser());
+
     options.AddPolicy("CommentReply", policy => policy.RequireAuthenticatedUser());
+
     options.AddPolicy("BlogEdit",
         policy => policy.RequireAuthenticatedUser().AddRequirements(
             new SameAuthorRequirement()));
 
     options.AddPolicy("BlogDelete",
         policy => policy.RequireAuthenticatedUser().AddRequirements(
-            new IAuthorizationRequirement[] {
-                new RolesAuthorizationRequirement(new List<string> {"admin"}),
-                new SameAuthorRequirement() }));
+            new SameAuthorRequirement()));
 
     options.AddPolicy("BlogCreate", policy => policy.RequireAuthenticatedUser());
 });
