@@ -9,5 +9,6 @@ namespace Domain.Repositories
 {
     public interface IBlogPostRepository : IRepository<BlogPost>, IFind<BlogPost>
     {
+        Task<Dictionary<int, Dictionary<int, int>>> GetDictionaryOfPostedDateAsync();
     }
 }

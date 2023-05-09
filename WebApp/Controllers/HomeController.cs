@@ -22,6 +22,8 @@ namespace WebApp.Controllers
         {
             HomeIndexViewModel model = new HomeIndexViewModel();
             model.BlogPosts = await _dbService.PostRepository.GetAllAsync();
+            model.DictPostedOn = await _dbService.PostRepository.GetDictionaryOfPostedDateAsync();
+
             return View(model);
         }
 
