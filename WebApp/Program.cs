@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
-        options.UseSqlServer(connectionString: builder.Configuration["DbMirage"]);
+        options.UseSqlServer(connectionString: builder.Configuration["db-eminence-connection-string"]);
     }
 );
 
@@ -83,6 +83,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    app.EnsureIdentityDbCreated();
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
