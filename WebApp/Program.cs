@@ -11,12 +11,24 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(
+        options =>
+        {
+            options.UseSqlServer(connectionString: builder.Configuration["db-eminence-connectionstring-test"]);
+        }
+    );
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
-        options.UseSqlServer(connectionString: builder.Configuration["db-eminence-connection-string"]);
+        options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING"));
     }
 );
+}
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
