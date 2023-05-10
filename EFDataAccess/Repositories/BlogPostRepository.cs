@@ -26,6 +26,22 @@ namespace EFDataAccess.Repositories
 
         public async Task<IList<BlogPost>> GetAllAsync() => await _context.BlogPosts.Include(c => c.Tags).Include(c => c.Comments).Include(c => c.Author).ToListAsync();
 
+        public async Task<int> GetBlogPostCountAsync() => await _context.BlogPosts.CountAsync();
+
+        public async Task<List<BlogPost>> GetBlogPostsAsync(int pageNum, int numOfBlogPostsPerPage)
+        {
+            if(pageNum < 1) pageNum = 1;
+            if(numOfBlogPostsPerPage < 1) numOfBlogPostsPerPage = 1;
+
+            var posts = await _context.BlogPosts.OrderByDescending(c => c.PostedOn).Include(c => c.Author).Include(c => c.Tags).ToListAsync();
+            int startIndex = (pageNum - 1) * numOfBlogPostsPerPage; 
+
+            int endIndex = ((pageNum - 1) * numOfBlogPostsPerPage) + numOfBlogPostsPerPage;
+            posts = posts.Take(new Range(startIndex, endIndex)).ToList();
+
+            return posts;
+        }
+
         public async Task<Dictionary<int, Dictionary<int, int>>> GetDictionaryOfPostedDateAsync()
         {
             List<BlogPost> posts = await _context.BlogPosts.OrderByDescending(c => c.PostedOn).ToListAsync();

@@ -18,12 +18,14 @@ namespace WebApp.Controllers
             _dbService = dBService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage = 1)
         {
-            HomeIndexViewModel model = new HomeIndexViewModel();
-            model.BlogPosts = await _dbService.PostRepository.GetAllAsync();
+            int numOfPost = await _dbService.PostRepository.GetBlogPostCountAsync();
+            HomeIndexViewModel model = new();
+            model.NumOfPages = (numOfPost / 10);
+            model.BlogPosts = await _dbService.PostRepository.GetBlogPostsAsync(currentPage, 10);
             model.DictPostedOn = await _dbService.PostRepository.GetDictionaryOfPostedDateAsync();
-
+            model.CurrentPage = currentPage;
             return View(model);
         }
 
