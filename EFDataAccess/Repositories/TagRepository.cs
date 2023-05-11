@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace EFDataAccess.Repositories
 {
-    public class TagRepository : Repository<Tag>, ITagRepository
+    public class TagRepository : Repository<Tag, TagRepository>, ITagRepository
     {
-        public TagRepository(ApplicationDbContext context) : base(context)
+        public TagRepository(ApplicationDbContext context, ILogger<TagRepository> logger) : base(context, logger)
         {
         }
 

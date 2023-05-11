@@ -19,12 +19,12 @@ namespace EFDataAccess.Services
         private readonly ITagRepository _tagRepository;
         private readonly IAuthorRepository _authorRepository;
 
-        public DBService(ApplicationDbContext context)
+        public DBService(ApplicationDbContext context, ILogger<AuthorRepository> authorLogger, ILogger<BlogPostRepository> blogPostLogger, ILogger<TagRepository> tagLogger, ILogger<CommentRepository> commentLogger)
         {
-            _postRepository = new BlogPostRepository(context);
-            _commentRepository = new CommentRepository(context);
-            _tagRepository = new TagRepository(context);
-            _authorRepository = new AuthorRepository(context);
+            _postRepository = new BlogPostRepository(context, blogPostLogger);
+            _commentRepository = new CommentRepository(context, commentLogger);
+            _tagRepository = new TagRepository(context, tagLogger);
+            _authorRepository = new AuthorRepository(context, authorLogger);
         }
 
         public IBlogPostRepository PostRepository

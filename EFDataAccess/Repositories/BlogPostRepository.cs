@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace EFDataAccess.Repositories
 {
-    public class BlogPostRepository : Repository<BlogPost>, IBlogPostRepository
+    public class BlogPostRepository : Repository<BlogPost, BlogPostRepository>, IBlogPostRepository
     {
-        public BlogPostRepository(ApplicationDbContext context) : base(context)
+        public BlogPostRepository(ApplicationDbContext context, ILogger<BlogPostRepository> logger) : base(context, logger)
         {
         }
 
@@ -30,11 +31,11 @@ namespace EFDataAccess.Repositories
 
         public async Task<List<BlogPost>> GetBlogPostsAsync(int pageNum, int numOfBlogPostsPerPage)
         {
-            if(pageNum < 1) pageNum = 1;
-            if(numOfBlogPostsPerPage < 1) numOfBlogPostsPerPage = 1;
+            if (pageNum < 1) pageNum = 1;
+            if (numOfBlogPostsPerPage < 1) numOfBlogPostsPerPage = 1;
 
             var posts = await _context.BlogPosts.OrderByDescending(c => c.PostedOn).Include(c => c.Author).Include(c => c.Tags).ToListAsync();
-            int startIndex = (pageNum - 1) * numOfBlogPostsPerPage; 
+            int startIndex = (pageNum - 1) * numOfBlogPostsPerPage;
 
             int endIndex = ((pageNum - 1) * numOfBlogPostsPerPage) + numOfBlogPostsPerPage;
             posts = posts.Take(new Range(startIndex, endIndex)).ToList();

@@ -2,6 +2,7 @@
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,15 @@ using System.Threading.Tasks;
 
 namespace EFDataAccess.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T, V> : IRepository<T> where T : class where V : Repository<T, V>
     {
         protected readonly ApplicationDbContext _context;
+        protected readonly ILogger<V> _logger;
 
-        public Repository(ApplicationDbContext context)
+        public Repository(ApplicationDbContext context, ILogger<V> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         #region GET Methods

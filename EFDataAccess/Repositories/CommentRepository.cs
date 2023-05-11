@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace EFDataAccess.Repositories
 {
-    public class CommentRepository : Repository<Comment>, ICommentRepository
+    public class CommentRepository : Repository<Comment, CommentRepository>, ICommentRepository
     {
-        public CommentRepository(ApplicationDbContext context) : base(context)
+        public CommentRepository(ApplicationDbContext context, ILogger<CommentRepository> logger) : base(context, logger)
         {
         }
 
