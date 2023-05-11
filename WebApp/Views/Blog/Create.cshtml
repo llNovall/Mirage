@@ -1,5 +1,6 @@
 ﻿@model BlogCreateModel
 @{
+    ViewData["Title"] = "Create Blog";
 }
 
 
@@ -58,41 +59,51 @@
     </form>
 </div>
 
+
+
+<link rel="stylesheet" type="text/css" href="~/lib/prism/prism.css">
 <script src="~/lib/tinymce/tinymce.min.js"></script>
+<script src="~/lib/prism/prism.js"></script>
 <script>
 
     tinymce.init(
         {
             selector: '#BodyContent',
             promotion: false,
-            plugins: 'image',
+            plugins: 'image lists advlist anchor autolink code autoresize codesample hr link preview searchreplace table visualblocks',
             skin:'tinymce-5',
-            content_css: "/css/site.css",
-            file_picker_types: 'image',
-            file_picker_callback: (callback, value, meta) => {
-                const input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', 'image/png, image/jpeg, image/jpg');
+            content_css: '/css/site.css',
+            images_upload_url: '/Blog/PostImage',
+            images_file_types: 'jpg,jpeg,png',
+            //toolbar: 'numlist bullist anchor link codesample hr link preview searchreplace visualblocks wordcount',
+            autoresize_bottom_margin: 50,
+            min_height: 300,
+            //menubar: 'insert tools'
+            //file_picker_types: 'image',
+            //file_picker_callback: (callback, value, meta) => {
+            //    const input = document.createElement('input');
+            //    input.setAttribute('type', 'file');
+            //    input.setAttribute('accept', 'image/png, image/jpeg, image/jpg');
 
-                input.addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    const reader = new FileReader();
+            //    input.addEventListener('change', (e) => {
+            //        const file = e.target.files[0];
+            //        const reader = new FileReader();
 
-                    reader.addEventListener('load', () => {
-                        const id = 'blobid' + (new Date()).getTime();
-                        const blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                        const base64 = reader.result.split(',')[1];
-                        const blobInfo = blobCache.create(id, file, base64);
-                        blobCache.add(blobInfo);
+            //        reader.addEventListener('load', () => {
+            //            const id = 'blobid' + (new Date()).getTime();
+            //            const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+            //            const base64 = reader.result.split(',')[1];
+            //            const blobInfo = blobCache.create(id, file, base64);
+            //            blobCache.add(blobInfo);
 
-                        /* call the callback and populate the Title field with the file name */
-                        callback(blobInfo.blobUri(), { title: file.name });
-                    });
-                    reader.readAsDataURL(file);
-                });
+            //            /* call the callback and populate the Title field with the file name */
+            //            callback(blobInfo.blobUri(), { title: file.name });
+            //        });
+            //        reader.readAsDataURL(file);
+            //    });
 
-                input.click();
-            }
+            //    input.click();
+            //}
 
 
 
