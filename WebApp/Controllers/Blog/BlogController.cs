@@ -26,10 +26,14 @@ namespace WebApp.Controllers.Blog
         {
             BlogIndexModel model = new BlogIndexModel();
             BlogPost? blogPost = await _db.PostRepository.FindByIdAsync(blogPostId);
-            IList<Comment> comments = await _db.CommentRepository.GetAllAsync(Guid.Parse(blogPostId));
 
-            model.Comments = comments;
-            model.BlogPost = blogPost;
+            if (blogPost != null)
+            {
+                IList<Comment> comments = await _db.CommentRepository.GetAllAsync(Guid.Parse(blogPostId));
+
+                model.Comments = comments;
+                model.BlogPost = blogPost;
+            }
 
             if (blogPost != null)
             {
