@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -18,26 +19,90 @@ namespace EFDataAccess.Repositories
         {
         }
 
-        public async Task<Tag?> FindAsync(Expression<Func<Tag, bool>> predicate) => await _context.Tags.Where(predicate).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+        public async Task<Tag?> FindAsync(Expression<Func<Tag, bool>> predicate)
+        {
+            try
+            {
+                return await _context.Tags.Where(predicate)
+                    .Include(c => c.BlogPosts)
+                    .Include(c => c.Author)
+                    .FirstOrDefaultAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
 
-        public async Task<Tag?> FindByIdAsync(Guid id) => await _context.Tags.Where(c => c.Id == id.ToString()).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+            return null;
+        }
 
-        public async Task<Tag?> FindByIdAsync(string id) => await _context.Tags.Where(c => c.Id == id).Include(c => c.BlogPosts).Include(c => c.Author).FirstOrDefaultAsync();
+        public async Task<Tag?> FindByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _context.Tags.Where(c => c.Id == id.ToString())
+                    .Include(c => c.BlogPosts)
+                    .Include(c => c.Author)
+                    .FirstOrDefaultAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
+
+            return null;
+        }
+
+        public async Task<Tag?> FindByIdAsync(string id)
+        {
+            try
+            {
+                return await _context.Tags.Where(c => c.Id == id)
+                    .Include(c => c.BlogPosts)
+                    .Include(c => c.Author)
+                    .FirstOrDefaultAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
+
+            return null;
+        }
 
         public async Task<IList<Tag>> GetAllAsync()
-            => await _context.Tags.Include(c => c.BlogPosts).Include(c => c.Author).ToListAsync();
+        {
+            try
+            {
+                return await _context.Tags.Include(c => c.BlogPosts)
+                    .Include(c => c.Author)
+                    .ToListAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
+
+            return new List<Tag>();
+        }
 
         public async Task<IList<BlogPost>> GetPostsByTagAsync(string tagName)
         {
             if (string.IsNullOrEmpty(tagName))
                 return new List<BlogPost>();
 
-            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.BlogPosts).FirstOrDefaultAsync();
+            try
+            {
+                Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.BlogPosts).FirstOrDefaultAsync();
 
-            if (tag == null)
-                return new List<BlogPost>();
+                return tag?.BlogPosts ?? new List<BlogPost>();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
 
-            return tag.BlogPosts;
+            return new List<BlogPost>();
         }
 
         public async Task<int> GetTotalPostsByTagAsync(string tagName)
@@ -45,12 +110,20 @@ namespace EFDataAccess.Repositories
             if (string.IsNullOrEmpty(tagName))
                 return 0;
 
-            Tag? tag = await _context.Tags.Where(c => c.TagName == tagName).Include(c => c.BlogPosts).FirstOrDefaultAsync();
+            try
+            {
+                Tag? tag = await _context.Tags.Where(c => c.TagName == tagName)
+                    .Include(c => c.BlogPosts)
+                    .FirstOrDefaultAsync();
 
-            if (tag == null)
-                return 0;
+                return tag?.BlogPosts?.Count ?? 0;
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
 
-            return tag.BlogPosts.Count;
+            return 0;
         }
     }
 }

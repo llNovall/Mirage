@@ -3,6 +3,7 @@ using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Data.Common;
 using System.Linq.Expressions;
 
@@ -24,18 +25,64 @@ namespace EFDataAccess.Repositories
                     .Include(c => c.Posts)
                     .FirstOrDefaultAsync();
             }
-            catch (DbException)
+            catch (DbException ex)
             {
+                _logger.LogCritical("DB Error - Author", ex.Message);
             }
 
             return null;
         }
 
         public async Task<Author?> FindByIdAsync(Guid id)
-            => await _context.Authors.Where(c => c.Id == id.ToString()).Include(c => c.Posts).Include(c => c.Tags).Include(c => c.Posts).FirstOrDefaultAsync();
+        {
+            try
+            {
+                return await _context.Authors.Where(c => c.Id == id.ToString())
+                    .Include(c => c.Posts)
+                    .Include(c => c.Tags)
+                    .Include(c => c.Posts).FirstOrDefaultAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Author", ex.Message);
+            }
 
-        public async Task<Author?> FindByIdAsync(string id) => await _context.Authors.Where(c => c.Id == id).Include(c => c.Posts).Include(c => c.Tags).Include(c => c.Posts).FirstOrDefaultAsync();
+            return null;
+        }
 
-        public async Task<IList<Author>> GetAllAsync() => await _context.Authors.Include(c => c.Posts).Include(c => c.Tags).Include(c => c.Comments).ToListAsync();
+        public async Task<Author?> FindByIdAsync(string id)
+        {
+            try
+            {
+                return await _context.Authors.Where(c => c.Id == id)
+                    .Include(c => c.Posts)
+                    .Include(c => c.Tags)
+                    .Include(c => c.Posts)
+                    .FirstOrDefaultAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Author", ex.Message);
+            }
+
+            return null;
+        }
+
+        public async Task<IList<Author>> GetAllAsync()
+        {
+            try
+            {
+                return await _context.Authors.Include(c => c.Posts)
+                    .Include(c => c.Tags)
+                    .Include(c => c.Comments)
+                    .ToListAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Author", ex.Message);
+            }
+
+            return new List<Author>();
+        }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -23,24 +24,6 @@ namespace EFDataAccess.Repositories
             _logger = logger;
         }
 
-        #region GET Methods
-
-        //public T? Find(Expression<Func<T, bool>> predicate) => _context.Set<T>().Where(predicate).FirstOrDefault();
-
-        //public T? FindById(string id) => _context.Set<T>().Find(Guid.Parse(id));
-
-        //public T? FindById(Guid id) => _context.Set<T>().Find(id.ToString());
-
-        //public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().Where(predicate).FirstOrDefaultAsync();
-
-        //public async Task<T?> FindByIdAsync(Guid id) => await _context.Set<T>().FindAsync(id);
-
-        //public async Task<T?> FindByIdAsync(string id) => await _context.Set<T>().FindAsync(Guid.Parse(id));
-
-        //public async Task<IList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
-
-        #endregion GET Methods
-
         #region ADD Methods
 
         public int Add(T entity)
@@ -48,8 +31,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            _context.Set<T>().Add(entity);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().Add(entity);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> AddAsync(T entity)
@@ -57,8 +49,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            await _context.Set<T>().AddAsync(entity);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Set<T>().AddAsync(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public int AddRange(IEnumerable<T> entities)
@@ -69,8 +70,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            _context.Set<T>().AddRange(entities);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().AddRange(entities);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> AddRangeAsync(IEnumerable<T> entities)
@@ -81,8 +91,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            await _context.Set<T>().AddRangeAsync(entities);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Set<T>().AddRangeAsync(entities);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         #endregion ADD Methods
@@ -94,8 +113,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            _context.Set<T>().Update(entity);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().Update(entity);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> UpdateAsync(T entity)
@@ -103,8 +131,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            _context.Set<T>().Update(entity);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                _context.Set<T>().Update(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public int UpdateRange(IEnumerable<T> entities)
@@ -114,8 +151,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            _context.Set<T>().UpdateRange(entities);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().UpdateRange(entities);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> UpdateRangeAsync(IEnumerable<T> entities)
@@ -125,8 +171,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            _context.Set<T>().UpdateRange(entities);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                _context.Set<T>().UpdateRange(entities);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         #endregion UPDATE Methods
@@ -138,8 +193,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            _context.Set<T>().Remove(entity);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().Remove(entity);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> RemoveAsync(T entity)
@@ -147,8 +211,17 @@ namespace EFDataAccess.Repositories
             if (entity == null)
                 return -1;
 
-            _context.Set<T>().Remove(entity);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                _context.Set<T>().Remove(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public int RemoveRange(IEnumerable<T> entities)
@@ -158,8 +231,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            _context.Set<T>().RemoveRange(entities);
-            return _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().RemoveRange(entities);
+                return _context.SaveChanges();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         public async Task<int> RemoveRangeAsync(IEnumerable<T> entities)
@@ -169,8 +251,17 @@ namespace EFDataAccess.Repositories
             if (!entities.Any())
                 return -1;
 
-            _context.Set<T>().RemoveRange(entities);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                _context.Set<T>().RemoveRange(entities);
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error", ex.Message);
+            }
+
+            return -1;
         }
 
         #endregion REMOVE Methods
