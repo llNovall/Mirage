@@ -36,9 +36,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().Add(entity);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -54,9 +55,10 @@ namespace EFDataAccess.Repositories
                 await _context.Set<T>().AddAsync(entity);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -75,9 +77,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().AddRange(entities);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -96,9 +99,10 @@ namespace EFDataAccess.Repositories
                 await _context.Set<T>().AddRangeAsync(entities);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -118,9 +122,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().Update(entity);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -136,9 +141,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().Update(entity);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -156,9 +162,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().UpdateRange(entities);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -176,9 +183,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().UpdateRange(entities);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -198,9 +206,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().Remove(entity);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -216,9 +225,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().Remove(entity);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -236,9 +246,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().RemoveRange(entities);
                 return _context.SaveChanges();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
@@ -256,9 +267,10 @@ namespace EFDataAccess.Repositories
                 _context.Set<T>().RemoveRange(entities);
                 return await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (Exception ex)
             {
-                _logger.LogCritical("DB Error", ex.Message);
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
             }
 
             return -1;
