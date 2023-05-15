@@ -14,7 +14,7 @@ namespace Domain.Entities
         [StringLength(maximumLength: 100, MinimumLength = 10)]
         public string Title { get; set; } = null!;
 
-        [StringLength(maximumLength: 4000, MinimumLength = 100)]
+        [MinLength(100)]
         public string BodyContent { get; set; } = null!;
 
         [DataType(DataType.DateTime)]
