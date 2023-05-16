@@ -64,14 +64,15 @@ namespace WebApp.Utils.Extentions
                     return;
                 IdentityUser? admin = await userManager.FindByNameAsync(username);
 
-                if (admin == null)
+                if (admin != null)
                     return;
 
                 admin = new IdentityUser(username);
 
                 await userManager.SetEmailAsync(admin, email);
-                await userManager.AddToRoleAsync(admin, "admin");
-                await userManager.CreateAsync(admin, password);
+                var result = await userManager.CreateAsync(admin, password);
+                if (result.Succeeded)
+                    await userManager.AddToRoleAsync(admin, "admin");
             }
         }
     }
