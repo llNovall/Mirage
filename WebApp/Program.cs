@@ -13,6 +13,13 @@ using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(c =>
+{
+    c.AddDebug();
+    c.AddConsole();
+    c.AddAzureWebAppDiagnostics();
+});
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDbContext<ApplicationDbContext>(
@@ -55,9 +62,12 @@ if (builder.Environment.IsDevelopment())
 else
 {
     builder.Services.AddAzureClients(c =>
-        c.AddBlobServiceClient(connectionString: builder.Configuration.GetConnectionString("AZURE_STORAGEBLOB_CONNECTIONSTRING"))
-    );
+    {
+        c.AddBlobServiceClient(connectionString: builder.Configuration.GetConnectionString("AZURE_STORAGEBLOB_CONNECTIONSTRING"));
+    });
 }
+
+#region Identity
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
@@ -69,7 +79,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = 8;
     options.Password.RequireUppercase = true;
 }
-).AddEntityFrameworkStores<ApplicationDbContext>();
+).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+#endregion Identity
 
 builder.Services.AddHttpsRedirection(options =>
 {
@@ -77,31 +89,44 @@ builder.Services.AddHttpsRedirection(options =>
     options.HttpsPort = 403;
 });
 
-builder.Services.AddMvc();
+builder.Services.AddMvc().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AddAreaPageRoute("Identity", "/Account/ForgotPassword", "resetpassword");
+    options.Conventions.AddAreaPageRoute("Identity", "/Account/Register", "signup");
+    options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "login");
+});
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CommentEdit",
-        policy => policy.RequireAuthenticatedUser().AddRequirements(
-            new SameAuthorRequirement()));
+        policy => policy.RequireAuthenticatedUser()
+        .AddRequirements(new SameAuthorRequirement())
+        .RequireRole("member"));
 
     options.AddPolicy("CommentDelete",
-        policy => policy.RequireAuthenticatedUser().AddRequirements(
-            new SameAuthorRequirement()));
+        policy => policy.RequireAuthenticatedUser()
+        .AddRequirements(new SameAuthorRequirement())
+        .RequireRole("member", "admin"));
 
-    options.AddPolicy("CommentCreate", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("CommentCreate",
+        policy => policy.RequireAuthenticatedUser().RequireRole("member", "blogger", "admin"));
 
-    options.AddPolicy("CommentReply", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("CommentReply",
+        policy => policy.RequireAuthenticatedUser().RequireRole("member", "blogger", "admin"));
 
     options.AddPolicy("BlogEdit",
-        policy => policy.RequireAuthenticatedUser().AddRequirements(
-            new SameAuthorRequirement()));
+        policy => policy.RequireAuthenticatedUser()
+        .AddRequirements(new SameAuthorRequirement())
+        .RequireRole("blogger"));
 
     options.AddPolicy("BlogDelete",
-        policy => policy.RequireAuthenticatedUser().AddRequirements(
-            new SameAuthorRequirement()));
+        policy => policy.RequireAuthenticatedUser()
+        .AddRequirements(new SameAuthorRequirement())
+        .RequireRole("blogger", "admin"));
 
-    options.AddPolicy("BlogCreate", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("BlogCreate",
+        policy => policy.RequireAuthenticatedUser()
+        .RequireRole("blogger"));
 });
 
 builder.Services.AddScoped<IDBService, DBService>();
@@ -137,6 +162,13 @@ else
     app.EnsureIdentityDbCreated();
     app.SeedTestDataToDatabase();
 }
+
+app.CreateRolesAsync("member", "blogger", "admin").Wait();
+
+#pragma warning disable CS8604 // Possible null reference argument.
+app.CreateAdminUserAsync(builder.Configuration["admin:Username"],
+    builder.Configuration["admin:Password"], builder.Configuration["admin:Email"]).Wait();
+#pragma warning restore CS8604 // Possible null reference argument.
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
