@@ -22,7 +22,6 @@ namespace WebApp.Controllers.Blog
         public BlogController(IDBService dBService,
             UserManager<IdentityUser> userManager,
             ILogger<BlogController> logger,
-            IUserStore<IdentityUser> userStore,
             IAzureStorageService azureStorageService,
             IAuthorizationService authorizationService)
         {
