@@ -9,11 +9,18 @@
 @{
     if (SignInManager.IsSignedIn(User))
     {
-        <div class="">
-                <p>Signed In as @UserManager.GetUserName(User)</p>
-                <form class="form-inline" method="post">
-                    <a class="btn btn-primary rounded-0 text-white" id="logout" asp-controller="Logout" asp-action="Logout">Logout</a>
-                </form>
+        <div class="col btn-group">
+            <button type="button" class="btn btn-secondary rounded-0 dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" >
+                    Signed In as @UserManager.GetUserName(User)
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end bg-secondary text-white text-center">
+                <li>
+                    <form class="form-inline" method="post">
+                        <a class="dropdown-item" id="logout" asp-controller="Logout" asp-action="Logout">Logout</a>
+                    </form>
+                </li>
+            </ul>
         </div>
     }
     else
