@@ -20,7 +20,7 @@ builder.Services.AddLogging(c =>
     c.AddAzureWebAppDiagnostics();
 });
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.EnvironmentName == "localdev")
 {
     builder.Services.AddDbContext<ApplicationDbContext>(
         options =>
@@ -39,7 +39,7 @@ else
     );
 }
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.EnvironmentName == "localdev")
 {
     ClientSecretCredential clientSecretCredential = new(tenantId: builder.Configuration["azure-storage:AZURE_TENANT_ID"],
     clientId: builder.Configuration["azure-storage:AZURE_CLIENT_ID"],
@@ -160,7 +160,9 @@ else
 {
     app.UseDeveloperExceptionPage();
     app.EnsureIdentityDbCreated();
-    app.SeedTestDataToDatabase();
+
+    if (builder.Environment.EnvironmentName == "localdev")
+        app.SeedTestDataToDatabase();
 }
 
 app.CreateRolesAsync("member", "blogger", "admin").Wait();
