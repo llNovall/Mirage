@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using System.Net;
+using System.Reflection;
 using WebApp.Authorization;
 using WebApp.Services;
 using WebApp.Utils.Extentions;
@@ -20,12 +21,17 @@ builder.Services.AddLogging(c =>
     c.AddAzureWebAppDiagnostics();
 });
 
-if (builder.Environment.EnvironmentName == "localdev")
+if (builder.Environment.IsEnvironment("LocalDev"))
+    builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
+
+if (builder.Environment.IsEnvironment("LocalDev"))
 {
+    string dbConnectionString = builder.Configuration["db-eminence-connectionstring-test"];
+
     builder.Services.AddDbContext<ApplicationDbContext>(
         options =>
         {
-            options.UseSqlServer(connectionString: builder.Configuration["db-eminence-connectionstring-test"]);
+            options.UseSqlServer(connectionString: dbConnectionString);
         }
     );
 }
@@ -39,25 +45,35 @@ else
     );
 }
 
-if (builder.Environment.EnvironmentName == "localdev")
+if (builder.Environment.IsEnvironment("LocalDev"))
 {
-    ClientSecretCredential clientSecretCredential = new(tenantId: builder.Configuration["azure-storage:AZURE_TENANT_ID"],
-    clientId: builder.Configuration["azure-storage:AZURE_CLIENT_ID"],
-    clientSecret: builder.Configuration["azure-storage:AZURE_CLIENT_SECRET"]);
+    string? tenantId = builder.Configuration["azure-storage:AZURE_TENANT_ID"];
+    string? clientId = builder.Configuration["azure-storage:AZURE_CLIENT_ID"];
+    string? clientSecret = builder.Configuration["azure-storage:AZURE_CLIENT_SECRET"];
+    string? azureStorageUrl = builder.Configuration["azure-storage:STORAGE_URL"];
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-    string azureStorageUrl = builder.Configuration["azure-storage:STORAGE_URL"];
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+    if (!string.IsNullOrEmpty(tenantId)
+        & !string.IsNullOrEmpty(clientId)
+        & !string.IsNullOrEmpty(clientSecret)
+        & !string.IsNullOrEmpty(azureStorageUrl))
+    {
+        ClientSecretCredential clientSecretCredential = new(
+        tenantId: tenantId,
+        clientId: clientId,
+        clientSecret: clientSecret
+        );
 
-    builder.Services.AddAzureClients(c =>
-        {
 #pragma warning disable CS8604 // Possible null reference argument.
-            c.AddBlobServiceClient(new Uri(azureStorageUrl));
+        Uri azureStorageUri = new Uri(azureStorageUrl);
 #pragma warning restore CS8604 // Possible null reference argument.
 
-            c.UseCredential(clientSecretCredential);
-        }
-    );
+        builder.Services.AddAzureClients(c =>
+            {
+                c.AddBlobServiceClient(azureStorageUri);
+                c.UseCredential(clientSecretCredential);
+            }
+        );
+    }
 }
 else
 {
@@ -96,6 +112,8 @@ builder.Services.AddMvc().AddRazorPagesOptions(options =>
     options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "login");
 });
 
+#region Authorization
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CommentEdit",
@@ -129,11 +147,17 @@ builder.Services.AddAuthorization(options =>
         .RequireRole("blogger"));
 });
 
+#endregion Authorization
+
+#region Add Services
+
 builder.Services.AddScoped<IDBService, DBService>();
 builder.Services.AddScoped<IAuthorizationHandler, SameAuthorIDHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, SameAuthorCommentHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, SameAuthorBlogPostHandler>();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
+
+#endregion Add Services
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -150,7 +174,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsProduction())
 {
     app.EnsureIdentityDbCreated();
     app.UseExceptionHandler("/Home/Error");
@@ -161,16 +185,31 @@ else
     app.UseDeveloperExceptionPage();
     app.EnsureIdentityDbCreated();
 
-    if (builder.Environment.EnvironmentName == "localdev")
+    if (builder.Environment.IsEnvironment("LocalDev"))
         app.SeedTestDataToDatabase();
 }
 
 app.CreateRolesAsync("member", "blogger", "admin").Wait();
 
-#pragma warning disable CS8604 // Possible null reference argument.
-app.CreateAdminUserAsync(builder.Configuration["admin:Username"],
-    builder.Configuration["admin:Password"], builder.Configuration["admin:Email"]).Wait();
-#pragma warning restore CS8604 // Possible null reference argument.
+string? adminUserName = "";
+string? adminPassword = "";
+string? adminEmail = "";
+
+if (builder.Environment.IsEnvironment("LocalDev"))
+{
+    adminUserName = builder.Configuration.GetSection("admin").GetRequiredSection("Username").Value;
+    adminPassword = builder.Configuration.GetSection("admin").GetRequiredSection("Password").Value;
+    adminEmail = builder.Configuration.GetSection("admin").GetRequiredSection("Email").Value;
+}
+else
+{
+    adminUserName = builder.Configuration.GetSection("adminUsername").Get<string>();
+    adminPassword = builder.Configuration.GetSection("adminPassword").Get<string>();
+    adminEmail = builder.Configuration.GetSection("adminEmail").Get<string>();
+}
+
+if (!string.IsNullOrEmpty(adminUserName) && !string.IsNullOrEmpty(adminPassword) && !string.IsNullOrEmpty(adminEmail))
+    app.CreateAdminUserAsync(username: adminUserName, password: adminPassword, email: adminEmail).Wait();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
