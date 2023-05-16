@@ -1,9 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
-using Domain.Services;
-using Azure.Storage;
-using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs.Models;
+using Domain.Services;
 
 namespace WebApp.Services
 {

@@ -3,10 +3,7 @@ using Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using WebApp.Authorization;
 using WebApp.Models.Blog;
-using WebApp.Utils.Extentions;
 
 namespace WebApp.Controllers.Blog
 {

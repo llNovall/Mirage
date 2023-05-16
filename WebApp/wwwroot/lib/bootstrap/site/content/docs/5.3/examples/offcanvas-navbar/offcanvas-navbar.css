@@ -21,10 +21,11 @@ body {
     background-color: #343a40;
     transition: transform .3s ease-in-out, visibility .3s ease-in-out;
   }
-  .offcanvas-collapse.open {
-    visibility: visible;
-    transform: translateX(-100%);
-  }
+
+    .offcanvas-collapse.open {
+      visibility: visible;
+      transform: translateX(-100%);
+    }
 }
 
 .nav-scroller .nav {
@@ -38,9 +39,9 @@ body {
   color: #6c757d;
 }
 
-.nav-scroller .nav-link:hover {
-  color: #007bff;
-}
+  .nav-scroller .nav-link:hover {
+    color: #007bff;
+  }
 
 .nav-scroller .active {
   font-weight: 500;

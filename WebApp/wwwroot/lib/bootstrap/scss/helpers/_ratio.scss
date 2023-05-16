@@ -21,6 +21,10 @@
 
 @each $key, $ratio in $aspect-ratios {
   .ratio-#{$key} {
-    --#{$prefix}aspect-ratio: #{$ratio};
+    --# {
+      $prefix
+    }
+
+    aspect-ratio: #{$ratio};
   }
 }

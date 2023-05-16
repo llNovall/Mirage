@@ -31,7 +31,8 @@
         </div>
       </div>
 
-      {{ highlight (printf `<div class="dropdown">
+      {{
+ highlight (printf `<div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown
   </button>
@@ -41,7 +42,8 @@
     <li><button class="dropdown-item" type="button">Dropdown item</button></li>
   </ul>
 </div>
-`) "html" "" }}
+`) "html" ""
+      }}
       <p>Learn more about <a href="/docs/{{ .Site.Params.docs_version }}/getting-started/javascript/#using-bootstrap-as-a-module">our JavaScript as modules</a> and <a href="/docs/{{ .Site.Params.docs_version }}/getting-started/javascript/#programmatic-api">using the programmatic API</a>.</p>
     </div>
     <div class="col-lg-6 mb-3">
@@ -50,16 +52,15 @@
       <hr class="my-4">
       <div class="row g-3">
         {{- range $plugin := .Site.Data.plugins -}}
-          {{- $href := printf "/docs/%s/%s" $.Site.Params.docs_version $plugin.link }}
-          <div class="col-sm-6 mb-2">
-            <a class="d-block pe-lg-4 text-decoration-none lh-sm" href="{{ $href }}">
-              <h4 class="mb-0 fs-5 fw-semibold">{{ $plugin.name }}</h4>
-              <small class="text-body-secondary">{{ $plugin.description }}</small>
-            </a>
-          </div>
+        {{- $href := printf "/docs/%s/%s" $.Site.Params.docs_version $plugin.link }}
+        <div class="col-sm-6 mb-2">
+          <a class="d-block pe-lg-4 text-decoration-none lh-sm" href="{{ $href }}">
+            <h4 class="mb-0 fs-5 fw-semibold">{{ $plugin.name }}</h4>
+            <small class="text-body-secondary">{{ $plugin.description }}</small>
+          </a>
+        </div>
         {{- end }}
       </div>
     </div>
   </div>
-
 </section>

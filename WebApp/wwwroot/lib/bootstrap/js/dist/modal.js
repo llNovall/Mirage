@@ -314,6 +314,5 @@
   index_js.defineJQueryPlugin(Modal);
 
   return Modal;
-
 }));
 //# sourceMappingURL=modal.js.map

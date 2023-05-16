@@ -540,6 +540,5 @@
   index_js.defineJQueryPlugin(Tooltip);
 
   return Tooltip;
-
 }));
 //# sourceMappingURL=tooltip.js.map

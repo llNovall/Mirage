@@ -1,7 +1,6 @@
 ﻿using EFDataAccess.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace WebApp.Utils.Extentions
 {
@@ -55,7 +54,7 @@ namespace WebApp.Utils.Extentions
             }
         }
 
-        public static async Task CreateAdminUserAsync(this IApplicationBuilder builder,  string username, string password, string email)
+        public static async Task CreateAdminUserAsync(this IApplicationBuilder builder, string username, string password, string email)
         {
             using (var serviceScope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -72,7 +71,7 @@ namespace WebApp.Utils.Extentions
 
                 await userManager.SetEmailAsync(admin, email);
                 await userManager.AddToRoleAsync(admin, "admin");
-                await userManager.CreateAsync(admin, password);            
+                await userManager.CreateAsync(admin, password);
             }
         }
     }

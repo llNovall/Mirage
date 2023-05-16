@@ -396,6 +396,5 @@
   index_js.defineJQueryPlugin(Dropdown);
 
   return Dropdown;
-
 }));
 //# sourceMappingURL=dropdown.js.map

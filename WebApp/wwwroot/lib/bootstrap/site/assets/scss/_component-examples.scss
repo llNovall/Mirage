@@ -13,7 +13,6 @@
 
 .bd-example {
   --bd-example-padding: 1rem;
-
   position: relative;
   padding: var(--bd-example-padding);
   margin: 0 ($bd-gutter-x * -.5);
@@ -23,7 +22,6 @@
 
   @include media-breakpoint-up(md) {
     --bd-example-padding: 1.5rem;
-
     margin-right: 0;
     margin-left: 0;
     border-width: 1px;
@@ -66,22 +64,20 @@
   > hr:last-child {
     margin-bottom: $spacer;
   }
-
   // Images
   > svg + svg,
   > img + img {
     margin-left: .5rem;
   }
-
   // Buttons
   > .btn,
   > .btn-group {
     margin: .25rem .125rem;
   }
+
   > .btn-toolbar + .btn-toolbar {
     margin-top: .5rem;
   }
-
   // List groups
   > .list-group {
     max-width: 400px;
@@ -90,7 +86,6 @@
   > [class*="list-group-horizontal"] {
     max-width: 100%;
   }
-
   // Navbars
   .fixed-top,
   .sticky-top {
@@ -102,9 +97,7 @@
   .sticky-bottom {
     position: static;
     margin: var(--bd-example-padding) calc(var(--bd-example-padding) * -1) calc(var(--bd-example-padding) * -1); // stylelint-disable-line function-disallowed-list
-
   }
-
   // Pagination
   .pagination {
     margin-bottom: 0;
@@ -189,6 +182,7 @@
     }
   }
 }
+
 .bd-example-ratios-breakpoint {
   .ratio-4x3 {
     width: 16rem;
@@ -329,14 +323,17 @@
     top: 3rem;
     left: 3rem;
   }
+
   > :nth-child(3) {
     top: 4.5rem;
     left: 4.5rem;
   }
+
   > :nth-child(4) {
     top: 6rem;
     left: 6rem;
   }
+
   > :nth-child(5) {
     top: 7.5rem;
     left: 7.5rem;

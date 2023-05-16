@@ -382,6 +382,5 @@
   index_js.defineJQueryPlugin(Carousel);
 
   return Carousel;
-
 }));
 //# sourceMappingURL=carousel.js.map

@@ -5,31 +5,133 @@
 // .modal-dialog    - positioning shell for the actual modal
 // .modal-content   - actual modal w/ bg and corners and stuff
 
-
 // Container that the modal scrolls within
 .modal {
   // scss-docs-start modal-css-vars
-  --#{$prefix}modal-zindex: #{$zindex-modal};
-  --#{$prefix}modal-width: #{$modal-md};
-  --#{$prefix}modal-padding: #{$modal-inner-padding};
-  --#{$prefix}modal-margin: #{$modal-dialog-margin};
-  --#{$prefix}modal-color: #{$modal-content-color};
-  --#{$prefix}modal-bg: #{$modal-content-bg};
-  --#{$prefix}modal-border-color: #{$modal-content-border-color};
-  --#{$prefix}modal-border-width: #{$modal-content-border-width};
-  --#{$prefix}modal-border-radius: #{$modal-content-border-radius};
-  --#{$prefix}modal-box-shadow: #{$modal-content-box-shadow-xs};
-  --#{$prefix}modal-inner-border-radius: #{$modal-content-inner-border-radius};
-  --#{$prefix}modal-header-padding-x: #{$modal-header-padding-x};
-  --#{$prefix}modal-header-padding-y: #{$modal-header-padding-y};
-  --#{$prefix}modal-header-padding: #{$modal-header-padding}; // Todo in v6: Split this padding into x and y
-  --#{$prefix}modal-header-border-color: #{$modal-header-border-color};
-  --#{$prefix}modal-header-border-width: #{$modal-header-border-width};
-  --#{$prefix}modal-title-line-height: #{$modal-title-line-height};
-  --#{$prefix}modal-footer-gap: #{$modal-footer-margin-between};
-  --#{$prefix}modal-footer-bg: #{$modal-footer-bg};
-  --#{$prefix}modal-footer-border-color: #{$modal-footer-border-color};
-  --#{$prefix}modal-footer-border-width: #{$modal-footer-border-width};
+  --# {
+    $prefix
+  }
+
+  modal-zindex: #{$zindex-modal};
+
+  --# {
+    $prefix
+  }
+
+  modal-width: #{$modal-md};
+
+  --# {
+    $prefix
+  }
+
+  modal-padding: #{$modal-inner-padding};
+
+  --# {
+    $prefix
+  }
+
+  modal-margin: #{$modal-dialog-margin};
+
+  --# {
+    $prefix
+  }
+
+  modal-color: #{$modal-content-color};
+
+  --# {
+    $prefix
+  }
+
+  modal-bg: #{$modal-content-bg};
+
+  --# {
+    $prefix
+  }
+
+  modal-border-color: #{$modal-content-border-color};
+
+  --# {
+    $prefix
+  }
+
+  modal-border-width: #{$modal-content-border-width};
+
+  --# {
+    $prefix
+  }
+
+  modal-border-radius: #{$modal-content-border-radius};
+
+  --# {
+    $prefix
+  }
+
+  modal-box-shadow: #{$modal-content-box-shadow-xs};
+
+  --# {
+    $prefix
+  }
+
+  modal-inner-border-radius: #{$modal-content-inner-border-radius};
+
+  --# {
+    $prefix
+  }
+
+  modal-header-padding-x: #{$modal-header-padding-x};
+
+  --# {
+    $prefix
+  }
+
+  modal-header-padding-y: #{$modal-header-padding-y};
+
+  --# {
+    $prefix
+  }
+
+  modal-header-padding: #{$modal-header-padding}; // Todo in v6: Split this padding into x and y
+  --# {
+    $prefix
+  }
+
+  modal-header-border-color: #{$modal-header-border-color};
+
+  --# {
+    $prefix
+  }
+
+  modal-header-border-width: #{$modal-header-border-width};
+
+  --# {
+    $prefix
+  }
+
+  modal-title-line-height: #{$modal-title-line-height};
+
+  --# {
+    $prefix
+  }
+
+  modal-footer-gap: #{$modal-footer-margin-between};
+
+  --# {
+    $prefix
+  }
+
+  modal-footer-bg: #{$modal-footer-bg};
+
+  --# {
+    $prefix
+  }
+
+  modal-footer-border-color: #{$modal-footer-border-color};
+
+  --# {
+    $prefix
+  }
+
+  modal-footer-border-width: #{$modal-footer-border-width};
   // scss-docs-end modal-css-vars
 
   position: fixed;
@@ -56,16 +158,15 @@
   margin: var(--#{$prefix}modal-margin);
   // allow clicks to pass through for custom click handling to close modal
   pointer-events: none;
-
   // When fading in the modal, animate it to slide down
   .modal.fade & {
     @include transition($modal-transition);
     transform: $modal-fade-transform;
   }
+
   .modal.show & {
     transform: $modal-show-transform;
   }
-
   // When trying to close, animate focus to scale
   .modal.modal-static & {
     transform: $modal-scale-transform;
@@ -112,9 +213,23 @@
 // Modal background
 .modal-backdrop {
   // scss-docs-start modal-backdrop-css-vars
-  --#{$prefix}backdrop-zindex: #{$zindex-modal-backdrop};
-  --#{$prefix}backdrop-bg: #{$modal-backdrop-bg};
-  --#{$prefix}backdrop-opacity: #{$modal-backdrop-opacity};
+  --# {
+    $prefix
+  }
+
+  backdrop-zindex: #{$zindex-modal-backdrop};
+
+  --# {
+    $prefix
+  }
+
+  backdrop-bg: #{$modal-backdrop-bg};
+
+  --# {
+    $prefix
+  }
+
+  backdrop-opacity: #{$modal-backdrop-opacity};
   // scss-docs-end modal-backdrop-css-vars
 
   @include overlay-backdrop(var(--#{$prefix}backdrop-zindex), var(--#{$prefix}backdrop-bg), var(--#{$prefix}backdrop-opacity));
@@ -164,7 +279,6 @@
   background-color: var(--#{$prefix}modal-footer-bg);
   border-top: var(--#{$prefix}modal-footer-border-width) solid var(--#{$prefix}modal-footer-border-color);
   @include border-bottom-radius(var(--#{$prefix}modal-inner-border-radius));
-
   // Place margin between footer elements
   // This solution is far from ideal because of the universal selector usage,
   // but is needed to fix https://github.com/twbs/bootstrap/issues/24800
@@ -176,10 +290,18 @@
 // Scale up the modal
 @include media-breakpoint-up(sm) {
   .modal {
-    --#{$prefix}modal-margin: #{$modal-dialog-margin-y-sm-up};
-    --#{$prefix}modal-box-shadow: #{$modal-content-box-shadow-sm-up};
-  }
+    --# {
+      $prefix
+    }
 
+    modal-margin: #{$modal-dialog-margin-y-sm-up};
+
+    --# {
+      $prefix
+    }
+
+    modal-box-shadow: #{$modal-content-box-shadow-sm-up};
+  }
   // Automatically set modal's width for larger viewports
   .modal-dialog {
     max-width: var(--#{$prefix}modal-width);
@@ -188,20 +310,32 @@
   }
 
   .modal-sm {
-    --#{$prefix}modal-width: #{$modal-sm};
+    --# {
+      $prefix
+    }
+
+    modal-width: #{$modal-sm};
   }
 }
 
 @include media-breakpoint-up(lg) {
   .modal-lg,
   .modal-xl {
-    --#{$prefix}modal-width: #{$modal-lg};
+    --# {
+      $prefix
+    }
+
+    modal-width: #{$modal-lg};
   }
 }
 
 @include media-breakpoint-up(xl) {
   .modal-xl {
-    --#{$prefix}modal-width: #{$modal-xl};
+    --# {
+      $prefix
+    }
+
+    modal-width: #{$modal-xl};
   }
 }
 

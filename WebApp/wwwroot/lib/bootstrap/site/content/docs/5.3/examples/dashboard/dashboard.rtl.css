@@ -38,19 +38,19 @@ body {
   color: #333;
 }
 
-.sidebar .nav-link .feather {
-  margin-left: 4px;
-  color: #727272;
-}
+  .sidebar .nav-link .feather {
+    margin-left: 4px;
+    color: #727272;
+  }
 
-.sidebar .nav-link.active {
-  color: #2470dc;
-}
+  .sidebar .nav-link.active {
+    color: #2470dc;
+  }
 
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
-}
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+      color: inherit;
+    }
 
 .sidebar-heading {
   font-size: .75rem;
@@ -82,7 +82,7 @@ body {
   border-color: rgba(255, 255, 255, .1);
 }
 
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
+  .form-control-dark:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+  }

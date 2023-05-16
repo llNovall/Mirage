@@ -240,6 +240,5 @@
   index_js.defineJQueryPlugin(Offcanvas);
 
   return Offcanvas;
-
 }));
 //# sourceMappingURL=offcanvas.js.map

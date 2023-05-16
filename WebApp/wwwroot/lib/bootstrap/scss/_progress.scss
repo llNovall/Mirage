@@ -3,7 +3,9 @@
 // scss-docs-start progress-keyframes
 @if $enable-transitions {
   @keyframes progress-bar-stripes {
-    0% { background-position-x: $progress-height; }
+    0% {
+      background-position-x: $progress-height;
+    }
   }
 }
 // scss-docs-end progress-keyframes
@@ -11,14 +13,48 @@
 .progress,
 .progress-stacked {
   // scss-docs-start progress-css-vars
-  --#{$prefix}progress-height: #{$progress-height};
+  --# {
+    $prefix
+  }
+
+  progress-height: #{$progress-height};
   @include rfs($progress-font-size, --#{$prefix}progress-font-size);
-  --#{$prefix}progress-bg: #{$progress-bg};
-  --#{$prefix}progress-border-radius: #{$progress-border-radius};
-  --#{$prefix}progress-box-shadow: #{$progress-box-shadow};
-  --#{$prefix}progress-bar-color: #{$progress-bar-color};
-  --#{$prefix}progress-bar-bg: #{$progress-bar-bg};
-  --#{$prefix}progress-bar-transition: #{$progress-bar-transition};
+
+  --# {
+    $prefix
+  }
+
+  progress-bg: #{$progress-bg};
+
+  --# {
+    $prefix
+  }
+
+  progress-border-radius: #{$progress-border-radius};
+
+  --# {
+    $prefix
+  }
+
+  progress-box-shadow: #{$progress-box-shadow};
+
+  --# {
+    $prefix
+  }
+
+  progress-bar-color: #{$progress-bar-color};
+
+  --# {
+    $prefix
+  }
+
+  progress-bar-bg: #{$progress-bar-bg};
+
+  --# {
+    $prefix
+  }
+
+  progress-bar-transition: #{$progress-bar-transition};
   // scss-docs-end progress-css-vars
 
   display: flex;

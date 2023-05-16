@@ -1,15 +1,15 @@
+using Azure.Identity;
 using Domain.Services;
 using EFDataAccess.Contexts;
 using EFDataAccess.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Net;
-using WebApp.Utils.Extentions;
-using WebApp.Authorization;
 using Microsoft.AspNetCore.Authorization;
-using WebApp.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
-using Azure.Identity;
+using System.Net;
+using WebApp.Authorization;
+using WebApp.Services;
+using WebApp.Utils.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 

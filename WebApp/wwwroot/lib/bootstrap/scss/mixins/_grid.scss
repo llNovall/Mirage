@@ -3,8 +3,17 @@
 // Generate semantic grid columns with these mixins.
 
 @mixin make-row($gutter: $grid-gutter-width) {
-  --#{$prefix}gutter-x: #{$gutter};
-  --#{$prefix}gutter-y: 0;
+  --# {
+    $prefix
+  }
+
+  gutter-x: #{$gutter};
+
+  --# {
+    $prefix
+  }
+
+  gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
   // TODO: Revisit calc order after https://github.com/react-bootstrap/react-bootstrap/issues/6039 is fixed
@@ -31,8 +40,8 @@
   @if $size {
     flex: 0 0 auto;
     width: percentage(divide($size, $columns));
-
-  } @else {
+  }
+  @else {
     flex: 1 1 0;
     max-width: 100%;
   }
@@ -97,7 +106,6 @@
             @include make-col($i, $columns);
           }
         }
-
         // `$columns - 1` because offsetting by the width of an entire row isn't possible
         @for $i from 0 through ($columns - 1) {
           @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
@@ -107,19 +115,26 @@
           }
         }
       }
-
       // Gutters
       //
       // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
       @each $key, $value in $gutters {
         .g#{$infix}-#{$key},
         .gx#{$infix}-#{$key} {
-          --#{$prefix}gutter-x: #{$value};
+          --# {
+            $prefix
+          }
+
+          gutter-x: #{$value};
         }
 
         .g#{$infix}-#{$key},
         .gy#{$infix}-#{$key} {
-          --#{$prefix}gutter-y: #{$value};
+          --# {
+            $prefix
+          }
+
+          gutter-y: #{$value};
         }
       }
     }
@@ -137,7 +152,6 @@
             grid-column: auto / span $i;
           }
         }
-
         // Start with `1` because `0` is and invalid value.
         // Ends with `$columns - 1` because offsetting by the width of an entire row isn't possible.
         @for $i from 1 through ($columns - 1) {

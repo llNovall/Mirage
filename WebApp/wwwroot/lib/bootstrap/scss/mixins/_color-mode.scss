@@ -7,12 +7,14 @@
           @content;
         }
       }
-    } @else {
+    }
+    @else {
       @media (prefers-color-scheme: $mode) {
         @content;
       }
     }
-  } @else {
+  }
+  @else {
     [data-bs-theme="#{$mode}"] {
       @content;
     }

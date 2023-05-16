@@ -5,13 +5,42 @@
 
 .nav {
   // scss-docs-start nav-css-vars
-  --#{$prefix}nav-link-padding-x: #{$nav-link-padding-x};
-  --#{$prefix}nav-link-padding-y: #{$nav-link-padding-y};
+  --# {
+    $prefix
+  }
+
+  nav-link-padding-x: #{$nav-link-padding-x};
+
+  --# {
+    $prefix
+  }
+
+  nav-link-padding-y: #{$nav-link-padding-y};
   @include rfs($nav-link-font-size, --#{$prefix}nav-link-font-size);
-  --#{$prefix}nav-link-font-weight: #{$nav-link-font-weight};
-  --#{$prefix}nav-link-color: #{$nav-link-color};
-  --#{$prefix}nav-link-hover-color: #{$nav-link-hover-color};
-  --#{$prefix}nav-link-disabled-color: #{$nav-link-disabled-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-link-font-weight: #{$nav-link-font-weight};
+
+  --# {
+    $prefix
+  }
+
+  nav-link-color: #{$nav-link-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-link-hover-color: #{$nav-link-hover-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-link-disabled-color: #{$nav-link-disabled-color};
   // scss-docs-end nav-css-vars
 
   display: flex;
@@ -42,7 +71,6 @@
     outline: 0;
     box-shadow: $nav-link-focus-box-shadow;
   }
-
   // Disabled state lightens text
   &.disabled {
     color: var(--#{$prefix}nav-link-disabled-color);
@@ -57,13 +85,47 @@
 
 .nav-tabs {
   // scss-docs-start nav-tabs-css-vars
-  --#{$prefix}nav-tabs-border-width: #{$nav-tabs-border-width};
-  --#{$prefix}nav-tabs-border-color: #{$nav-tabs-border-color};
-  --#{$prefix}nav-tabs-border-radius: #{$nav-tabs-border-radius};
-  --#{$prefix}nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
-  --#{$prefix}nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
-  --#{$prefix}nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
-  --#{$prefix}nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
+  --# {
+    $prefix
+  }
+
+  nav-tabs-border-width: #{$nav-tabs-border-width};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-border-color: #{$nav-tabs-border-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-border-radius: #{$nav-tabs-border-radius};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
+
+  --# {
+    $prefix
+  }
+
+  nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
   // scss-docs-end nav-tabs-css-vars
 
   border-bottom: var(--#{$prefix}nav-tabs-border-width) solid var(--#{$prefix}nav-tabs-border-color);
@@ -103,16 +165,29 @@
   }
 }
 
-
 //
 // Pills
 //
 
 .nav-pills {
   // scss-docs-start nav-pills-css-vars
-  --#{$prefix}nav-pills-border-radius: #{$nav-pills-border-radius};
-  --#{$prefix}nav-pills-link-active-color: #{$nav-pills-link-active-color};
-  --#{$prefix}nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
+  --# {
+    $prefix
+  }
+
+  nav-pills-border-radius: #{$nav-pills-border-radius};
+
+  --# {
+    $prefix
+  }
+
+  nav-pills-link-active-color: #{$nav-pills-link-active-color};
+
+  --# {
+    $prefix
+  }
+
+  nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
   // scss-docs-end nav-pills-css-vars
 
   .nav-link {
@@ -132,16 +207,29 @@
   }
 }
 
-
 //
 // Underline
 //
 
 .nav-underline {
   // scss-docs-start nav-underline-css-vars
-  --#{$prefix}nav-underline-gap: #{$nav-underline-gap};
-  --#{$prefix}nav-underline-border-width: #{$nav-underline-border-width};
-  --#{$prefix}nav-underline-link-active-color: #{$nav-underline-link-active-color};
+  --# {
+    $prefix
+  }
+
+  nav-underline-gap: #{$nav-underline-gap};
+
+  --# {
+    $prefix
+  }
+
+  nav-underline-border-width: #{$nav-underline-border-width};
+
+  --# {
+    $prefix
+  }
+
+  nav-underline-link-active-color: #{$nav-underline-link-active-color};
   // scss-docs-end nav-underline-css-vars
 
   gap: var(--#{$prefix}nav-underline-gap);
@@ -164,7 +252,6 @@
     border-bottom-color: currentcolor;
   }
 }
-
 
 //
 // Justified variants
@@ -194,7 +281,6 @@
   }
 }
 
-
 // Tabbable tabs
 //
 // Hide tabbable panes to start, show them when `.active`
@@ -203,6 +289,7 @@
   > .tab-pane {
     display: none;
   }
+
   > .active {
     display: block;
   }

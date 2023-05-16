@@ -25,6 +25,6 @@ namespace WebApp.Models.Contact
         [Display(Name = "Message")]
         [MinLength(5)]
         [DataType(DataType.Text)]
-        public string Message { get; set; } = null !;
+        public string Message { get; set; } = null!;
     }
 }

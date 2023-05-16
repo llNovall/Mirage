@@ -90,6 +90,5 @@
   index_js.defineJQueryPlugin(Popover);
 
   return Popover;
-
 }));
 //# sourceMappingURL=popover.js.map

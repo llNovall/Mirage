@@ -73,6 +73,5 @@
   index_js.defineJQueryPlugin(Button);
 
   return Button;
-
 }));
 //# sourceMappingURL=button.js.map

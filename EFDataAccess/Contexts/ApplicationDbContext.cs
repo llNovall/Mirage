@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
 
 namespace EFDataAccess.Contexts
 {
@@ -88,7 +88,7 @@ namespace EFDataAccess.Contexts
                     {
                         Id = Guid.NewGuid().ToString(),
                         TagDescription = string.Join(" ", Faker.Lorem.Words(10)),
-                        Author = authors[random.Next(0, authors.Count-1)],
+                        Author = authors[random.Next(0, authors.Count - 1)],
                         TagName = Faker.Name.Last()
                     };
 
@@ -99,9 +99,9 @@ namespace EFDataAccess.Contexts
                 {
                     BlogPost blogPost = new BlogPost()
                     {
-                        Author = authors[random.Next(0, authors.Count-1)],
+                        Author = authors[random.Next(0, authors.Count - 1)],
                         Id = Guid.NewGuid().ToString(),
-                        Tags = tags.Take(random.Next(3, tags.Count -1)).ToList(),
+                        Tags = tags.Take(random.Next(3, tags.Count - 1)).ToList(),
                         Title = string.Join(" ", Faker.Lorem.Words(5)),
                         BodyContent = string.Join(" ", Faker.Lorem.Words(200)),
                         PostedOn = new DateTime(random.Next(2000, 2023), random.Next(1, 12), random.Next(1, 28))
@@ -144,7 +144,7 @@ namespace EFDataAccess.Contexts
             {
                 Comment comment = new Comment();
                 comment.Id = Guid.NewGuid().ToString();
-                comment.Author = authors[random.Next(0, authors.Count-1)];
+                comment.Author = authors[random.Next(0, authors.Count - 1)];
                 comment.BodyContent = string.Join(" ", Faker.Lorem.Words(20));
                 comment.BlogPost = null;
                 comment.ParentComment = parent;

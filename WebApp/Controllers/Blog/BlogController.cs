@@ -1,12 +1,10 @@
-﻿using Azure;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using WebApp.Models.Blog;
-using WebApp.Utils;
 
 namespace WebApp.Controllers.Blog
 {

@@ -84,6 +84,5 @@
   index_js.defineJQueryPlugin(Alert);
 
   return Alert;
-
 }));
 //# sourceMappingURL=alert.js.map

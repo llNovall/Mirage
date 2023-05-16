@@ -18,34 +18,33 @@
   <div class="col-lg-6">
     <h3>Include all of Bootstrap’s Sass</h3>
     <p>Import one stylesheet and you're off to the races with every feature of our CSS.</p>
-    {{ highlight (printf `// Variable overrides first
+    {{
+ highlight (printf `// Variable overrides first
 $primary: #900;
 $enable-shadows: true;
 $prefix: "mo-";
-
 // Then import Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
-`) "scss" "" }}
+`) "scss" ""
+    }}
     <p>Learn more about our <a href="/docs/{{ .Site.Params.docs_version }}/customize/options/">global Sass options</a>.</p>
   </div>
   <div class="col-lg-6">
     <h3>Include what you need</h3>
     <p>The easiest way to customize Bootstrap—include only the CSS you need.</p>
-{{ highlight (printf `// Functions first
+    {{
+ highlight (printf `// Functions first
 @import "../node_modules/bootstrap/scss/functions";
-
 // Variable overrides second
 $primary: #900;
 $enable-shadows: true;
 $prefix: "mo-";
-
 // Required Bootstrap imports
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/variables-dark";
 @import "../node_modules/bootstrap/scss/maps";
 @import "../node_modules/bootstrap/scss/mixins";
 @import "../node_modules/bootstrap/scss/root";
-
 // Optional components
 @import "../node_modules/bootstrap/scss/utilities";
 @import "../node_modules/bootstrap/scss/reboot";
@@ -53,7 +52,8 @@ $prefix: "mo-";
 @import "../node_modules/bootstrap/scss/grid";
 @import "../node_modules/bootstrap/scss/helpers";
 @import "../node_modules/bootstrap/scss/utilities/api";
-`) "scss" "" }}
+`) "scss" ""
+    }}
     <p>Learn more about <a href="/docs/{{ .Site.Params.docs_version }}/customize/sass/">using Bootstrap with Sass</a>.</p>
   </div>
 </section>

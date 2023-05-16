@@ -1,6 +1,5 @@
 ﻿using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApp.Models;
 using WebApp.Models.Home;

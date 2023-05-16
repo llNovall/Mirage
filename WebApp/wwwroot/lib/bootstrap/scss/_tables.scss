@@ -3,23 +3,70 @@
 //
 
 .table {
-  --#{$prefix}table-color: #{$table-color};
-  --#{$prefix}table-bg: #{$table-bg};
-  --#{$prefix}table-border-color: #{$table-border-color};
-  --#{$prefix}table-accent-bg: #{$table-accent-bg};
-  --#{$prefix}table-striped-color: #{$table-striped-color};
-  --#{$prefix}table-striped-bg: #{$table-striped-bg};
-  --#{$prefix}table-active-color: #{$table-active-color};
-  --#{$prefix}table-active-bg: #{$table-active-bg};
-  --#{$prefix}table-hover-color: #{$table-hover-color};
-  --#{$prefix}table-hover-bg: #{$table-hover-bg};
+  --# {
+    $prefix
+  }
 
+  table-color: #{$table-color};
+
+  --# {
+    $prefix
+  }
+
+  table-bg: #{$table-bg};
+
+  --# {
+    $prefix
+  }
+
+  table-border-color: #{$table-border-color};
+
+  --# {
+    $prefix
+  }
+
+  table-accent-bg: #{$table-accent-bg};
+
+  --# {
+    $prefix
+  }
+
+  table-striped-color: #{$table-striped-color};
+
+  --# {
+    $prefix
+  }
+
+  table-striped-bg: #{$table-striped-bg};
+
+  --# {
+    $prefix
+  }
+
+  table-active-color: #{$table-active-color};
+
+  --# {
+    $prefix
+  }
+
+  table-active-bg: #{$table-active-bg};
+
+  --# {
+    $prefix
+  }
+
+  table-hover-color: #{$table-hover-color};
+
+  --# {
+    $prefix
+  }
+
+  table-hover-bg: #{$table-hover-bg};
   width: 100%;
   margin-bottom: $spacer;
   color: var(--#{$prefix}table-color);
   vertical-align: $table-cell-vertical-align;
   border-color: var(--#{$prefix}table-border-color);
-
   // Target th & td
   // We need the child combinator to prevent styles leaking to nested tables which doesn't have a `.table` class.
   // We use the universal selectors here to simplify the selector (else we would need 6 different selectors).
@@ -53,7 +100,6 @@
   caption-side: top;
 }
 
-
 //
 // Condensed table w/ half padding
 //
@@ -64,7 +110,6 @@
     padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
   }
 }
-
 
 // Border versions
 //
@@ -78,7 +123,6 @@
 .table-bordered {
   > :not(caption) > * {
     border-width: $table-border-width 0;
-
     // stylelint-disable-next-line selector-max-universal
     > * {
       border-width: 0 $table-border-width;
@@ -104,7 +148,11 @@
 // For rows
 .table-striped {
   > tbody > tr:nth-of-type(#{$table-striped-order}) > * {
-    --#{$prefix}table-accent-bg: var(--#{$prefix}table-striped-bg);
+    --# {
+      $prefix
+    }
+
+    table-accent-bg: var(--#{$prefix}table-striped-bg);
     color: var(--#{$prefix}table-striped-color);
   }
 }
@@ -112,7 +160,11 @@
 // For columns
 .table-striped-columns {
   > :not(caption) > tr > :nth-child(#{$table-striped-columns-order}) {
-    --#{$prefix}table-accent-bg: var(--#{$prefix}table-striped-bg);
+    --# {
+      $prefix
+    }
+
+    table-accent-bg: var(--#{$prefix}table-striped-bg);
     color: var(--#{$prefix}table-striped-color);
   }
 }
@@ -122,7 +174,11 @@
 // The `.table-active` class can be added to highlight rows or cells
 
 .table-active {
-  --#{$prefix}table-accent-bg: var(--#{$prefix}table-active-bg);
+  --# {
+    $prefix
+  }
+
+  table-accent-bg: var(--#{$prefix}table-active-bg);
   color: var(--#{$prefix}table-active-color);
 }
 
@@ -132,11 +188,14 @@
 
 .table-hover {
   > tbody > tr:hover > * {
-    --#{$prefix}table-accent-bg: var(--#{$prefix}table-hover-bg);
+    --# {
+      $prefix
+    }
+
+    table-accent-bg: var(--#{$prefix}table-hover-bg);
     color: var(--#{$prefix}table-hover-color);
   }
 }
-
 
 // Table variants
 //

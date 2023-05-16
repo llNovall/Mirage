@@ -129,6 +129,5 @@
   }
 
   return Swipe;
-
 }));
 //# sourceMappingURL=swipe.js.map

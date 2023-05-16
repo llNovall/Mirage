@@ -3,7 +3,6 @@
 }
 
 .bd-layout {
-
   @include media-breakpoint-up(lg) {
     display: grid;
     grid-template-areas: "sidebar main";
@@ -27,17 +26,14 @@
   @include media-breakpoint-up(md) {
     display: grid;
     grid-template-areas:
-      "intro"
-      "toc"
-      "content";
+      "intro" "toc" "content";
     grid-template-rows: auto auto 1fr;
     gap: inherit;
   }
 
   @include media-breakpoint-up(lg) {
     grid-template-areas:
-      "intro   toc"
-      "content toc";
+      "intro   toc" "content toc";
     grid-template-rows: auto 1fr;
     grid-template-columns: 4fr 1fr;
   }

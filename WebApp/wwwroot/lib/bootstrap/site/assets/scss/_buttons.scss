@@ -33,7 +33,6 @@
 
 .btn-bd-light {
   --btn-custom-color: #{mix($bd-violet, $white, 75%)};
-
   --bs-btn-color: var(--bs-gray-600);
   --bs-btn-border-color: var(--bs-border-color);
   --bs-btn-hover-color: var(--btn-custom-color);
@@ -47,6 +46,5 @@
 
 .bd-btn-lg {
   --bs-btn-border-radius: .5rem;
-
   padding: .8125rem 2rem;
 }

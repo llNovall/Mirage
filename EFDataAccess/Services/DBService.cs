@@ -1,14 +1,8 @@
-﻿using Domain.Entities;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Domain.Services;
 using EFDataAccess.Contexts;
 using EFDataAccess.Repositories;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFDataAccess.Services
 {
