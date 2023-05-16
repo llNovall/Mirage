@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
@@ -53,16 +54,19 @@ namespace WebApp.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = new IdentityUser();
+                IdentityUser user = new ();
 
                 await _userManager.SetUserNameAsync(user: user, userName: Input.Username);
                 await _userManager.SetEmailAsync(user: user, email: Input.Email);
+
+                await _userManager.AddToRoleAsync(user, "member");
+
                 _logger.LogDebug($"User named {Input.Username} created.");
                 IdentityResult resultUserManager = await _userManager.CreateAsync(user: user, password: Input.Password);
 
                 if (resultUserManager.Succeeded)
                 {
-                    Author author = new Author
+                    Author author = new()
                     {
                         Id = user.Id,
                         Username = user.UserName
