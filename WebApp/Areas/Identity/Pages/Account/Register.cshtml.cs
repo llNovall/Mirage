@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using WebApp.Models.Identity;
 
 namespace WebApp.Areas.Identity.Pages.Account
@@ -46,13 +47,13 @@ namespace WebApp.Areas.Identity.Pages.Account
                 await _userManager.SetUserNameAsync(user: user, userName: Input.Username);
                 await _userManager.SetEmailAsync(user: user, email: Input.Email);
 
-                await _userManager.AddToRoleAsync(user, "member");
-
                 _logger.LogDebug($"User named {Input.Username} created.");
                 IdentityResult resultUserManager = await _userManager.CreateAsync(user: user, password: Input.Password);
-
+                
                 if (resultUserManager.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "member");
+
                     Author author = new()
                     {
                         Id = user.Id,
