@@ -178,21 +178,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsProduction())
-{
-    app.EnsureIdentityDbCreated();
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-else
-{
-    app.UseDeveloperExceptionPage();
-    app.EnsureIdentityDbCreated();
+#region Database Creation and Seeding
 
-    if (builder.Environment.IsEnvironment("LocalDev"))
-        app.SeedTestDataToDatabase();
-}
+app.EnsureIdentityDbCreated();
 
 app.CreateRolesAsync("member", "blogger", "admin").Wait();
 
@@ -213,8 +201,28 @@ else
     adminEmail = builder.Configuration.GetSection("adminEmail").Get<string>();
 }
 
-if (!string.IsNullOrEmpty(adminUserName) && !string.IsNullOrEmpty(adminPassword) && !string.IsNullOrEmpty(adminEmail))
-    app.CreateAdminUserAsync(username: adminUserName, password: adminPassword, email: adminEmail).Wait();
+if (string.IsNullOrEmpty(adminUserName) | string.IsNullOrEmpty(adminPassword) | string.IsNullOrEmpty(adminEmail))
+    throw new NullReferenceException();
+
+app.CreateAdminUserAsync(username: adminUserName, password: adminPassword, email: adminEmail).Wait();
+
+if (builder.Environment.IsEnvironment("LocalDev"))
+    app.SeedDataToDatabase(adminUserName);
+else
+    app.SeedDataToDatabase(adminUserName);
+
+#endregion Database Creation and Seeding
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -153,5 +153,28 @@ namespace EFDataAccess.Contexts
                 CreateFakeComments(branch, minComment, maxComment, blogPost, comment, authors);
             }
         }
+
+        public void SeedTagData(Author author)
+        {
+            if (Tags.Any())
+                return;
+
+            string[] tagNames = new string[] { "Programming", "Azure", "C#" };
+            string[] tagDescription = new string[] { "Things related to programming", "Microsoft's cloud platform", "Programming language" };
+            for (int i = 0; i < tagNames.Length; i++)
+            {
+                Tag tag = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Author = author,
+                    TagName = tagNames[i],
+                    TagDescription = tagDescription[i]
+                };
+
+                Tags.Add(tag);
+            }
+
+            SaveChanges();
+        }
     }
 }

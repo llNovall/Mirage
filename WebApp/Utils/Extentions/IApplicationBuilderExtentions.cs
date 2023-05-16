@@ -1,4 +1,5 @@
-﻿using EFDataAccess.Contexts;
+﻿using Domain.Entities;
+using EFDataAccess.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,46 @@ namespace WebApp.Utils.Extentions
                 ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                 dbContext.SeedTestData();
+            }
+        }
+
+        /// <summary>
+        /// Seeds database with test data. Use this only for development.
+        /// </summary>
+        /// <param name="builder"></param>
+        public static void SeedDataToDatabase(this IApplicationBuilder builder, string adminUsername)
+        {
+            using (var serviceScope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                if (dbContext == null)
+                    throw new NullReferenceException(nameof(dbContext));
+
+                UserManager<IdentityUser>? userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+                if (userManager == null)
+                    throw new NullReferenceException(nameof(userManager));
+
+                IdentityUser? identityUser = userManager.FindByNameAsync(adminUsername).Result;
+
+                if (identityUser == null)
+                    throw new NullReferenceException(nameof(identityUser));
+
+                Author? author = dbContext.Authors.Where(c => c.Id == identityUser.Id).FirstOrDefault();
+
+                if (author == null)
+                {
+                    author = new Author
+                    {
+                        Id = identityUser.Id,
+                        Username = identityUser.UserName
+                    };
+                }
+
+                dbContext.Authors.Add(author);
+
+                dbContext.SeedTagData(author);
             }
         }
 

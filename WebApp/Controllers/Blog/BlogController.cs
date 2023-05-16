@@ -71,7 +71,7 @@ namespace WebApp.Controllers.Blog
             if (tags.Count <= 0)
             {
                 _logger.LogError("BLOG CREATE VIEW FAILED", "Tags from database returned empty.");
-                return RedirectToRoute("default");
+                return RedirectToAction("Index", "Home");
             }
 
             tags.ForEach(c => model.TagsList.Add(new TagCheckItem { TagId = c.Id.ToString(), TagName = c.TagName, IsChecked = false }));
