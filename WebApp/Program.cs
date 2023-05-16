@@ -64,7 +64,7 @@ if (builder.Environment.IsEnvironment("LocalDev"))
         );
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        Uri azureStorageUri = new Uri(azureStorageUrl);
+        Uri azureStorageUri = new(azureStorageUrl);
 #pragma warning restore CS8604 // Possible null reference argument.
 
         builder.Services.AddAzureClients(c =>
@@ -77,9 +77,14 @@ if (builder.Environment.IsEnvironment("LocalDev"))
 }
 else
 {
+    string? azureStorageBlogConnectionString = builder.Configuration["AZURE_STORAGEBLOB_CONNECTIONSTRING"];
+
+    if (string.IsNullOrEmpty(azureStorageBlogConnectionString))
+        throw new NullReferenceException("AzureStorageBlogConnection string is null");
+
     builder.Services.AddAzureClients(c =>
     {
-        c.AddBlobServiceClient(connectionString: builder.Configuration.GetConnectionString("AZURE_STORAGEBLOB_CONNECTIONSTRING"));
+        c.AddBlobServiceClient(connectionString: azureStorageBlogConnectionString);
     });
 }
 
