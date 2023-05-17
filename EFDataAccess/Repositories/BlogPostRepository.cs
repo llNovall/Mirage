@@ -146,5 +146,30 @@ namespace EFDataAccess.Repositories
 
             return new Dictionary<int, Dictionary<int, int>>();
         }
+
+        public override async Task<int> RemoveAsync(BlogPost entity)
+        {
+            if (entity == null)
+                return -1;
+
+            try
+            {
+                for (int i = 0; i < entity.Tags.Count; i++)
+                {
+                    entity.Tags[i].BlogPosts.Remove(entity);
+                }
+
+                var s = _context.BlogPosts.Remove(entity);
+
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
+            }
+
+            return -1;
+        }
     }
 }

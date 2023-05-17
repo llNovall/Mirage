@@ -1,16 +1,20 @@
 ﻿@model BlogIndexModel
 @{
+
     if (Model.BlogPost == null)
     {
+        ViewData["Title"] = "Blog";
         <partial name="_BlogPostRetrievalError" />
         return;
     }
+
+    ViewData["Title"] = Model.BlogPost.Title;
 }
 
 <!-- Tags / Edit -Start- -->
 
 <div class="row justify-content-center mt-4">
-    <div class="col-11">
+    <div class="col-8 col-md-9 col-lg-10">
         <div class="overflow-y-auto text-center" style="max-height:30px;min-height:30px;">
             @{
                 if (Model.BlogPost.Tags != null)
@@ -27,13 +31,28 @@
 
     @{
         var blogEditResult = await AuthorizationService.AuthorizeAsync(User, Model.BlogPost, "BlogEdit");
+        var blogDeleteResult = await AuthorizationService.AuthorizeAsync(User, Model.BlogPost, "BlogDelete");
 
-        if (blogEditResult.Succeeded)
-        {
-            <div class="col-1">
-                <a class="btn btn-sm btn-primary text-white border-1 border-dark" asp-action="Edit" asp-controller="Blog" asp-route-blogPostId="@Model.BlogPost.Id">Edit</a>
-            </div>
+        <div class="col-4 col-md-3 col-lg-2 text-end">
+
+        @{
+                if (blogEditResult.Succeeded)
+                {
+                    <a class="btn btn-sm btn-primary text-white border-1 border-dark" asp-action="Edit" asp-controller="Blog" asp-route-blogPostId="@Model.BlogPost.Id">Edit</a>
+                }
+
+                if (blogDeleteResult.Succeeded)
+                {
+                    <partial name="_BlogDeleteModalPartial" model="Model.BlogPost" />
+                }
         }
+            
+        </div>
+        
+
+        
+
+        
     }
 
 </div>

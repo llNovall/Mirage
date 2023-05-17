@@ -26,7 +26,7 @@ if (builder.Environment.IsEnvironment("LocalDev"))
 
 if (builder.Environment.IsEnvironment("LocalDev"))
 {
-    string dbConnectionString = builder.Configuration["db-eminence-connectionstring-test"];
+    string? dbConnectionString = builder.Configuration["db-eminence-connectionstring-test"];
 
     builder.Services.AddDbContext<ApplicationDbContext>(
         options =>
@@ -204,7 +204,9 @@ else
 if (string.IsNullOrEmpty(adminUserName) | string.IsNullOrEmpty(adminPassword) | string.IsNullOrEmpty(adminEmail))
     throw new NullReferenceException();
 
+#pragma warning disable CS8604 // Possible null reference argument.
 app.CreateAdminUserAsync(username: adminUserName, password: adminPassword, email: adminEmail).Wait();
+#pragma warning restore CS8604 // Possible null reference argument.
 
 if (builder.Environment.IsEnvironment("LocalDev"))
     app.SeedDataToDatabase(adminUserName);

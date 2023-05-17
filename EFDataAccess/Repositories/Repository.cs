@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EFDataAccess.Repositories
 {
-    public class Repository<T, V> : IRepository<T> where T : class where V : Repository<T, V>
+    public abstract class Repository<T, V> : IRepository<T> where T : class where V : Repository<T, V>
     {
         protected readonly ApplicationDbContext _context;
         protected readonly ILogger<V> _logger;
@@ -207,24 +207,7 @@ namespace EFDataAccess.Repositories
             return -1;
         }
 
-        public async Task<int> RemoveAsync(T entity)
-        {
-            if (entity == null)
-                return -1;
-
-            try
-            {
-                _context.Set<T>().Remove(entity);
-                return await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
-                    _logger.LogCritical("DB Error", ex.InnerException);
-            }
-
-            return -1;
-        }
+        public abstract Task<int> RemoveAsync(T entity);
 
         public int RemoveRange(IEnumerable<T> entities)
         {

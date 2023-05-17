@@ -120,5 +120,24 @@ namespace EFDataAccess.Repositories
 
             return 0;
         }
+
+        public override async Task<int> RemoveAsync(Tag entity)
+        {
+            if (entity == null)
+                return -1;
+
+            try
+            {
+                _context.Tags.Remove(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
+            }
+
+            return -1;
+        }
     }
 }

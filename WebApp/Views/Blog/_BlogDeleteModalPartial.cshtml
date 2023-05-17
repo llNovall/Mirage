@@ -1,0 +1,33 @@
+﻿@model BlogPost
+
+@{
+    var authorizeResult = await AuthorizationService.AuthorizeAsync(User, Model, "BlogDelete");
+
+    if (!authorizeResult.Succeeded)
+        return;
+
+    <!-- Button trigger modal -->
+    <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#blogDeleteModal">
+        Delete
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="blogDeleteModal" tabindex="-1" aria-labelledby="blogDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Blog</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Are you sure you want to delete this blog?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Blog" asp-route-blogPostId="@Model.Id">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

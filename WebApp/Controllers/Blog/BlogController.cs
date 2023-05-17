@@ -262,6 +262,49 @@ namespace WebApp.Controllers.Blog
         }
 
         [Authorize]
+        public async Task<IActionResult> DeleteAsync(string? blogPostId)
+        {
+            string? userId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find userId to delete blog with id - {blogPostId}.");
+                return RedirectToRoute("Index", "Home");
+            }
+
+            if (string.IsNullOrEmpty(blogPostId))
+            {
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Blogpost Id is missing.");
+                return RedirectToRoute("Index", "Home");
+            }
+
+            BlogPost? requestedPost = await _db.PostRepository.FindByIdAsync(blogPostId);
+
+            if (requestedPost == null)
+            {
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find blog post with id - {blogPostId}.");
+                return RedirectToRoute("Index", "Home");
+            }
+
+            var authorizeResult = await _authorizationService.AuthorizeAsync(User, requestedPost, "BlogDelete");
+
+            if (!authorizeResult.Succeeded)
+            {
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"User with id {userId} not authorized to delete blog post with id - {blogPostId}.");
+                return RedirectToRoute("Index", "Home");
+            }
+
+            int result = await _db.PostRepository.RemoveAsync(requestedPost);
+
+            if (result > 0)
+                _logger.LogInformation(_eventId, "BLOG DELETE SUCCESS", $"User {userId} successfully deleted blog post with id - {blogPostId}.");
+            else
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to delete from db blog post with id - {blogPostId}.");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
         [HttpPost]
         [Produces("application/json")]
         public async Task<IActionResult> PostImage(IFormCollection formCollection)

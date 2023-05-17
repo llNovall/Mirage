@@ -83,5 +83,24 @@ namespace EFDataAccess.Repositories
 
             return new List<Author>();
         }
+
+        public override async Task<int> RemoveAsync(Author entity)
+        {
+            if (entity == null)
+                return -1;
+
+            try
+            {
+                _context.Authors.Remove(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException or DbUpdateException or DbUpdateConcurrencyException)
+                    _logger.LogCritical("DB Error", ex.InnerException);
+            }
+
+            return -1;
+        }
     }
 }
