@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferClasses;
+using Domain.Entities;
 using Domain.Repositories;
 using EFDataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -100,6 +101,25 @@ namespace EFDataAccess.Repositories
             return new List<BlogPost>();
         }
 
+        public async Task<IList<BlogPost>> GetPostsByTagIdAsync(string tagId)
+        {
+            if (string.IsNullOrEmpty(tagId))
+                return new List<BlogPost>();
+
+            try
+            {
+                Tag? tag = await _context.Tags.Where(c => c.Id == tagId).Include(c => c.BlogPosts).ThenInclude(c => c.Author).FirstOrDefaultAsync();
+
+                return tag?.BlogPosts ?? new List<BlogPost>();
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
+
+            return new List<BlogPost>();
+        }
+
         public async Task<int> GetTotalPostsByTagAsync(string tagName)
         {
             if (string.IsNullOrEmpty(tagName))
@@ -119,6 +139,35 @@ namespace EFDataAccess.Repositories
             }
 
             return 0;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A list with data objects containing tagId, tag name and number of blog posts related to the tag.</returns>
+        public async Task<List<TagBlogPostCountData>> GetTagsPostsCountDataList()
+        {
+            List<TagBlogPostCountData> tagBlogPostCountDatas = new();
+
+            try
+            {
+                List<Tag> tags = await _context.Tags.Include(c => c.BlogPosts).ToListAsync();
+
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    Tag tag = tags[i];
+
+                    tagBlogPostCountDatas.Add(new TagBlogPostCountData(tag.Id, tag.TagName, tag.BlogPosts.Count));
+                }
+
+                return tagBlogPostCountDatas;
+            }
+            catch (DbException ex)
+            {
+                _logger.LogCritical("DB Error - Tag", ex.Message);
+            }
+
+            return tagBlogPostCountDatas;
         }
 
         public override async Task<int> RemoveAsync(Tag entity)

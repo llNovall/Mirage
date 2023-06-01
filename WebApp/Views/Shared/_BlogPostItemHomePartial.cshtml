@@ -19,7 +19,7 @@
                     {
                         for (int i = 0; i < Model.Tags.Count; i++)
                         {
-                            <a class="link-secondary link-offset-3-hover" href="#">@Model.Tags[i].TagName</a>
+                            <a class="link-secondary link-offset-3-hover" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.Tags[i].Id">@Model.Tags[i].TagName</a>
                         }
                     }
                 }

@@ -21,9 +21,10 @@ namespace WebApp.Controllers
         {
             int numOfPost = await _dbService.PostRepository.GetBlogPostCountAsync();
             HomeIndexViewModel model = new();
-            model.NumOfPages = (numOfPost / 10);
+            model.NumOfPages = (numOfPost / 10) + 1;
             model.BlogPosts = await _dbService.PostRepository.GetBlogPostsAsync(currentPage, 10);
             model.DictPostedOn = await _dbService.PostRepository.GetDictionaryOfPostedDateAsync();
+            model.TagBlogPostCountDatas = await _dbService.TagRepository.GetTagsPostsCountDataList();
             model.CurrentPage = currentPage;
             return View(model);
         }

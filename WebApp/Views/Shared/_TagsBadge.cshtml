@@ -1,0 +1,10 @@
+﻿@model TagBlogPostCountData
+
+<span class="badge bg-dark">
+    <a class="text-white link-underline-opacity-0 link-underline" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId">
+        @Model.TagName
+        <span class="badge bg-info">
+            @Model.BlogPostCount
+        </span>
+    </a>
+</span>

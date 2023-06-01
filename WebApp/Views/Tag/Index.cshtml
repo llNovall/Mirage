@@ -1,4 +1,4 @@
-﻿@model HomeIndexViewModel
+﻿@model TagIndexViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,7 +11,7 @@
             <div class="col">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h2 class="m-0 small-caps">Blogs</h2>
+                        <h2 class="m-0 small-caps">Blogs - @Model.TagName</h2>
                     </div>
                     @{
                         var result = await AuthorizationService.AuthorizeAsync(User, "BlogCreate");
@@ -30,15 +30,12 @@
             </div>
 
         </div>
+
         <div class="row justify-content-start">
 
             @{
                 for (int i = 0; i < Model.BlogPosts.Count; i++)
                 {
-                    //<div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-2">
-                    //    <partial name="_BlogPostItemHomePartial" model="Model.BlogPosts[i]">
-                    //</div>
-
                     <div class="col-12 mb-2">
                         <partial name="_BlogPostItemHomePartial" model="Model.BlogPosts[i]">
                     </div>
@@ -56,14 +53,14 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
                             @{
-                                if(Model.CurrentPage - 1 <= 0)
+                                if (Model.CurrentPage - 1 <= 0)
                                 {
-                                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="1">Previous</a>
+                                    <a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="1">Previous</a>
                                 }
 
                                 else
                                 {
-                                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="@(Model.CurrentPage-1)">Previous</a>
+                                    <a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="@(Model.CurrentPage-1)">Previous</a>
                                 }
 
                             }
@@ -73,13 +70,13 @@
                         @{
                             for (int i = 1; i <= Model.NumOfPages; i++)
                             {
-                                if(i == Model.CurrentPage)
+                                if (i == Model.CurrentPage)
                                 {
-                                    <li class="page-item active" aria-current="page"><a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="@i">@i</a></li>
+                                    <li class="page-item active" aria-current="page"><a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="@i">@i</a></li>
                                     continue;
                                 }
 
-                                <li class="page-item"><a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="@i">@i</a></li>
+                                <li class="page-item"><a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="@i">@i</a></li>
                             }
                         }
 
@@ -87,12 +84,12 @@
                             @{
                                 if (Model.CurrentPage + 1 > Model.NumOfPages)
                                 {
-                                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="@Model.CurrentPage">Next</a>
+                                    <a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="@Model.CurrentPage">Next</a>
                                 }
 
                                 else
                                 {
-                                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-currentPage="@(Model.CurrentPage+1)">Next</a>
+                                    <a class="page-link" asp-action="Index" asp-controller="Tag" asp-route-tagId="@Model.TagId" asp-route-currentPage="@(Model.CurrentPage+1)">Next</a>
                                 }
 
                             }

@@ -33,26 +33,25 @@
         var blogEditResult = await AuthorizationService.AuthorizeAsync(User, Model.BlogPost, "BlogEdit");
         var blogDeleteResult = await AuthorizationService.AuthorizeAsync(User, Model.BlogPost, "BlogDelete");
 
-        <div class="col-4 col-md-3 col-lg-2 text-end">
+        if(blogEditResult.Succeeded || blogDeleteResult.Succeeded)
+        {
+            <div class="col-4 col-md-3 col-lg-2 text-end">
 
-        @{
-                if (blogEditResult.Succeeded)
-                {
-                    <a class="btn btn-sm btn-primary text-white border-1 border-dark" asp-action="Edit" asp-controller="Blog" asp-route-blogPostId="@Model.BlogPost.Id">Edit</a>
+                @{
+                    if (blogEditResult.Succeeded)
+                    {
+                        <a class="btn btn-sm btn-primary text-white border-1 border-dark" asp-action="Edit" asp-controller="Blog" asp-route-blogPostId="@Model.BlogPost.Id">Edit</a>
+                    }
+
+                    if (blogDeleteResult.Succeeded)
+                    {
+                        <partial name="_BlogDeleteModalPartial" model="Model.BlogPost" />
+                    }
                 }
 
-                if (blogDeleteResult.Succeeded)
-                {
-                    <partial name="_BlogDeleteModalPartial" model="Model.BlogPost" />
-                }
+            </div>
         }
-            
-        </div>
-        
 
-        
-
-        
     }
 
 </div>

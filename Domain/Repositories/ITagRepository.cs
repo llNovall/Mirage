@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferClasses;
+using Domain.Entities;
 
 namespace Domain.Repositories
 {
@@ -7,5 +8,9 @@ namespace Domain.Repositories
         Task<IList<BlogPost>> GetPostsByTagAsync(string tagName);
 
         Task<int> GetTotalPostsByTagAsync(string tagName);
+
+        Task<IList<BlogPost>> GetPostsByTagIdAsync(string tagId);
+
+        Task<List<TagBlogPostCountData>> GetTagsPostsCountDataList();
     }
 }
