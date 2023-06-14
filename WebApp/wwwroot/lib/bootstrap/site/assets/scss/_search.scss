@@ -40,11 +40,13 @@
     width: 280px;
     margin-left: -140px;
   }
+
 }
 
 .DocSearch-Container {
   --docsearch-muted-color: var(--bs-secondary-color);
   --docsearch-hit-shadow: none;
+
   z-index: 2000; // Make sure to be over all components showcased in the documentation
   cursor: auto; // Needed because of [role="button"] in Algolia search modal. Remove once https://github.com/algolia/docsearch/issues/1370 is tackled.
 
@@ -60,6 +62,7 @@
   --docsearch-searchbox-shadow: #{0 0 0 .25rem rgba($bd-accent, .4)};
   --docsearch-text-color: #{$white};
   --docsearch-muted-color: #{rgba($white, .65)};
+
   width: 100%;
   height: 38px; // Match Bootstrap inputs
   margin: 0;
@@ -88,7 +91,6 @@
       border: 0;
       box-shadow: none;
     }
-
     &:focus {
       box-shadow: var(--docsearch-searchbox-shadow);
     }
@@ -153,7 +155,6 @@
     @include border-top-radius(var(--bs-border-radius));
     border-top-width: 1px;
   }
-
   &:last-child a {
     @include border-bottom-radius(var(--bs-border-radius));
   }

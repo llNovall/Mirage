@@ -4,11 +4,7 @@
 
 :root {
   @each $name, $value in $grid-breakpoints {
-    --# {
-      $prefix
-    }
-
-    breakpoint-#{$name}: #{$value};
+    --#{$prefix}breakpoint-#{$name}: #{$value};
   }
 }
 
@@ -32,6 +28,7 @@
     @include make-cssgrid();
   }
 }
+
 
 // Columns
 //

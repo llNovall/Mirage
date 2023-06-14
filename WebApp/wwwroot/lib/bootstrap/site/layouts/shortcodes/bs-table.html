@@ -1,8 +1,6 @@
-{{
-- /*
+{{- /*
   Usage: `bs-table "class class-foo"`, where class can be any string
-*/ -
-}}
+*/ -}}
 
 {{- $css_class := .Get 0 | default "table" -}}
 {{- $html_table := .Inner | markdownify -}}

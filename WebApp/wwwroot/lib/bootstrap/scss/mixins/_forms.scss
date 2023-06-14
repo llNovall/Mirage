@@ -8,15 +8,22 @@
     #{if(&, "&", "")}.is-#{$state} {
       @content;
     }
-  }
-  @else {
+  } @else {
     #{if(&, "&", "")}.is-#{$state} {
       @content;
     }
   }
 }
 
-@mixin form-validation-state( $state, $color, $icon, $tooltip-color: color-contrast($color), $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity), $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($color, $input-btn-focus-color-opacity), $border-color: $color ) {
+@mixin form-validation-state(
+  $state,
+  $color,
+  $icon,
+  $tooltip-color: color-contrast($color),
+  $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
+  $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($color, $input-btn-focus-color-opacity),
+  $border-color: $color
+) {
   .#{$state}-feedback {
     display: none;
     width: 100%;
@@ -66,6 +73,7 @@
       }
     }
   }
+
   // stylelint-disable-next-line selector-no-qualifying-type
   textarea.form-control {
     @include form-validation-state-selector($state) {
@@ -83,11 +91,7 @@
       @if $enable-validation-icons {
         &:not([multiple]):not([size]),
         &:not([multiple])[size="1"] {
-          --# {
-            $prefix
-          }
-
-          form-select-bg-icon: #{escape-svg($icon)};
+          --#{$prefix}form-select-bg-icon: #{escape-svg($icon)};
           padding-right: $form-select-feedback-icon-padding-end;
           background-position: $form-select-bg-position, $form-select-feedback-icon-position;
           background-size: $form-select-bg-size, $form-select-feedback-icon-size;
@@ -126,7 +130,6 @@
       }
     }
   }
-
   .form-check-inline .form-check-input {
     ~ .#{$state}-feedback {
       margin-left: .5em;
@@ -140,8 +143,7 @@
       @include form-validation-state-selector($state) {
         @if $state == "valid" {
           z-index: 3;
-        }
-        @else if $state == "invalid" {
+        } @else if $state == "invalid" {
           z-index: 4;
         }
       }

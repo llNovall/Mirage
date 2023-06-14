@@ -1,14 +1,13 @@
 /*!
-  * Bootstrap index.js v5.3.0-alpha3 (https://getbootstrap.com/)
+  * Bootstrap index.js v5.3.0 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Index = {}));
-})(this, (function (exports) {
-  'use strict';
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Index = {}));
+})(this, (function (exports) { 'use strict';
 
   /**
    * --------------------------------------------------------------------------
@@ -150,7 +149,7 @@
     }
     return findShadowRoot(element.parentNode);
   };
-  const noop = () => { };
+  const noop = () => {};
 
   /**
    * Trick to restart an element's animation
@@ -278,5 +277,6 @@
   exports.triggerTransitionEnd = triggerTransitionEnd;
 
   Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+
 }));
 //# sourceMappingURL=index.js.map

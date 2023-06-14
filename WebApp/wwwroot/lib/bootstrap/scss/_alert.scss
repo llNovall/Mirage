@@ -4,59 +4,15 @@
 
 .alert {
   // scss-docs-start alert-css-vars
-  --# {
-    $prefix
-  }
-
-  alert-bg: transparent;
-
-  --# {
-    $prefix
-  }
-
-  alert-padding-x: #{$alert-padding-x};
-
-  --# {
-    $prefix
-  }
-
-  alert-padding-y: #{$alert-padding-y};
-
-  --# {
-    $prefix
-  }
-
-  alert-margin-bottom: #{$alert-margin-bottom};
-
-  --# {
-    $prefix
-  }
-
-  alert-color: inherit;
-
-  --# {
-    $prefix
-  }
-
-  alert-border-color: transparent;
-
-  --# {
-    $prefix
-  }
-
-  alert-border: #{$alert-border-width} solid var(--#{$prefix}alert-border-color);
-
-  --# {
-    $prefix
-  }
-
-  alert-border-radius: #{$alert-border-radius};
-
-  --# {
-    $prefix
-  }
-
-  alert-link-color: inherit;
+  --#{$prefix}alert-bg: transparent;
+  --#{$prefix}alert-padding-x: #{$alert-padding-x};
+  --#{$prefix}alert-padding-y: #{$alert-padding-y};
+  --#{$prefix}alert-margin-bottom: #{$alert-margin-bottom};
+  --#{$prefix}alert-color: inherit;
+  --#{$prefix}alert-border-color: transparent;
+  --#{$prefix}alert-border: #{$alert-border-width} solid var(--#{$prefix}alert-border-color);
+  --#{$prefix}alert-border-radius: #{$alert-border-radius};
+  --#{$prefix}alert-link-color: inherit;
   // scss-docs-end alert-css-vars
 
   position: relative;
@@ -80,12 +36,14 @@
   color: var(--#{$prefix}alert-link-color);
 }
 
+
 // Dismissible alerts
 //
 // Expand the right padding and account for the close button's positioning.
 
 .alert-dismissible {
   padding-right: $alert-dismissible-padding-r;
+
   // Adjust close link position
   .btn-close {
     position: absolute;
@@ -96,33 +54,15 @@
   }
 }
 
+
 // scss-docs-start alert-modifiers
 // Generate contextual modifier classes for colorizing the alert
 @each $state in map-keys($theme-colors) {
   .alert-#{$state} {
-    --# {
-      $prefix
-    }
-
-    alert-color: var(--#{$prefix}#{$state}-text-emphasis);
-
-    --# {
-      $prefix
-    }
-
-    alert-bg: var(--#{$prefix}#{$state}-bg-subtle);
-
-    --# {
-      $prefix
-    }
-
-    alert-border-color: var(--#{$prefix}#{$state}-border-subtle);
-
-    --# {
-      $prefix
-    }
-
-    alert-link-color: var(--#{$prefix}#{$state}-text-emphasis);
+    --#{$prefix}alert-color: var(--#{$prefix}#{$state}-text-emphasis);
+    --#{$prefix}alert-bg: var(--#{$prefix}#{$state}-bg-subtle);
+    --#{$prefix}alert-border-color: var(--#{$prefix}#{$state}-border-subtle);
+    --#{$prefix}alert-link-color: var(--#{$prefix}#{$state}-text-emphasis);
   }
 }
 // scss-docs-end alert-modifiers

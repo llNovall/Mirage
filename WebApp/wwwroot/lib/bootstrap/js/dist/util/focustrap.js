@@ -1,14 +1,13 @@
 /*!
-  * Bootstrap focustrap.js v5.3.0-alpha3 (https://getbootstrap.com/)
+  * Bootstrap focustrap.js v5.3.0 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../dom/event-handler.js'), require('../dom/selector-engine.js'), require('./config.js')) :
-    typeof define === 'function' && define.amd ? define(['../dom/event-handler', '../dom/selector-engine', './config'], factory) :
-      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Focustrap = factory(global.EventHandler, global.SelectorEngine, global.Config));
-})(this, (function (EventHandler, SelectorEngine, Config) {
-  'use strict';
+  typeof define === 'function' && define.amd ? define(['../dom/event-handler', '../dom/selector-engine', './config'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Focustrap = factory(global.EventHandler, global.SelectorEngine, global.Config));
+})(this, (function (EventHandler, SelectorEngine, Config) { 'use strict';
 
   /**
    * --------------------------------------------------------------------------
@@ -16,6 +15,7 @@
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
+
 
   /**
    * Constants
@@ -109,5 +109,6 @@
   }
 
   return FocusTrap;
+
 }));
 //# sourceMappingURL=focustrap.js.map

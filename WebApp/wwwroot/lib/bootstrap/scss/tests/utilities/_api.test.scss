@@ -8,9 +8,28 @@ $utilities: ();
 
 @include describe("utilities/api") {
   @include it("generates utilities for each breakpoints") {
-    $utilities: ( margin: ( property: margin, values: auto ), padding: ( property: padding, responsive: true, values: 1rem ), font-size: ( property: font-size, values: (large: 1.25rem), print: true ) ) !global;
+    $utilities: (
+      margin: (
+        property: margin,
+        values: auto
+      ),
+      padding: (
+        property: padding,
+        responsive: true,
+        values: 1rem
+      ),
+      font-size: (
+        property: font-size,
+        values: (large: 1.25rem),
+        print: true
+      )
+    ) !global;
 
-    $grid-breakpoints: ( xs: 0, sm: 333px, md: 666px ) !global;
+    $grid-breakpoints: (
+      xs: 0,
+      sm: 333px,
+      md: 666px
+    ) !global;
 
     @include assert() {
       @include output() {
@@ -22,6 +41,7 @@ $utilities: ();
         .margin-auto {
           margin: auto !important;
         }
+
         // padding is, though
         .padding-1rem {
           padding: 1rem !important;
@@ -49,6 +69,7 @@ $utilities: ();
           }
         }
       }
+
     }
   }
 }

@@ -52,6 +52,7 @@
   transform: translateX(-100%);
 }
 
+
 //
 // Alternate transitions
 //
@@ -78,6 +79,7 @@
   }
 }
 
+
 //
 // Left/right controls for nav
 //
@@ -100,6 +102,7 @@
   border: 0;
   opacity: $carousel-control-opacity;
   @include transition($carousel-control-transition);
+
   // Hover/focus state
   &:hover,
   &:focus {
@@ -109,12 +112,10 @@
     opacity: $carousel-control-hover-opacity;
   }
 }
-
 .carousel-control-prev {
   left: 0;
   background-image: if($enable-gradients, linear-gradient(90deg, rgba($black, .25), rgba($black, .001)), null);
 }
-
 .carousel-control-next {
   right: 0;
   background-image: if($enable-gradients, linear-gradient(270deg, rgba($black, .25), rgba($black, .001)), null);
@@ -142,7 +143,6 @@
 .carousel-control-prev-icon {
   background-image: escape-svg($carousel-control-prev-icon-bg);
 }
-
 .carousel-control-next-icon {
   background-image: escape-svg($carousel-control-next-icon-bg);
 }
@@ -191,6 +191,7 @@
   }
 }
 
+
 // Optional captions
 //
 //
@@ -233,8 +234,7 @@
       .carousel {
         @include carousel-dark();
       }
-    }
-    @else {
+    } @else {
       .carousel,
       &.carousel {
         @include carousel-dark();

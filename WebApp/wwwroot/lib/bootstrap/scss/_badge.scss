@@ -5,36 +5,12 @@
 
 .badge {
   // scss-docs-start badge-css-vars
-  --# {
-    $prefix
-  }
-
-  badge-padding-x: #{$badge-padding-x};
-
-  --# {
-    $prefix
-  }
-
-  badge-padding-y: #{$badge-padding-y};
+  --#{$prefix}badge-padding-x: #{$badge-padding-x};
+  --#{$prefix}badge-padding-y: #{$badge-padding-y};
   @include rfs($badge-font-size, --#{$prefix}badge-font-size);
-
-  --# {
-    $prefix
-  }
-
-  badge-font-weight: #{$badge-font-weight};
-
-  --# {
-    $prefix
-  }
-
-  badge-color: #{$badge-color};
-
-  --# {
-    $prefix
-  }
-
-  badge-border-radius: #{$badge-border-radius};
+  --#{$prefix}badge-font-weight: #{$badge-font-weight};
+  --#{$prefix}badge-color: #{$badge-color};
+  --#{$prefix}badge-border-radius: #{$badge-border-radius};
   // scss-docs-end badge-css-vars
 
   display: inline-block;
@@ -48,6 +24,7 @@
   vertical-align: baseline;
   @include border-radius(var(--#{$prefix}badge-border-radius));
   @include gradient-bg();
+
   // Empty badges collapse automatically
   &:empty {
     display: none;

@@ -1,14 +1,13 @@
 /*!
-  * Bootstrap data.js v5.3.0-alpha3 (https://getbootstrap.com/)
+  * Bootstrap data.js v5.3.0 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Data = factory());
-})(this, (function () {
-  'use strict';
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Data = factory());
+})(this, (function () { 'use strict';
 
   /**
    * --------------------------------------------------------------------------
@@ -59,5 +58,6 @@
   };
 
   return data;
+
 }));
 //# sourceMappingURL=data.js.map

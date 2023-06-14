@@ -2,6 +2,11 @@
   max-width: 960px;
 }
 
+.icon-link > .bi {
+  width: .75em;
+  height: .75em;
+}
+
 /*
  * Custom translucent site header
  */
@@ -11,16 +16,14 @@
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
 }
-
-  .site-header a {
-    color: #8e8e8e;
-    transition: color .15s ease-in-out;
-  }
-
-    .site-header a:hover {
-      color: #fff;
-      text-decoration: none;
-    }
+.site-header a {
+  color: #8e8e8e;
+  transition: color .15s ease-in-out;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
 
 /*
  * Dummy devices (replace them with your own or something else entirely!)
@@ -37,16 +40,16 @@
   transform: rotate(30deg);
 }
 
-  .product-device::before {
-    position: absolute;
-    top: 10%;
-    right: 10px;
-    bottom: 10%;
-    left: 10px;
-    content: "";
-    background-color: rgba(255, 255, 255, .1);
-    border-radius: 5px;
-  }
+.product-device::before {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  bottom: 10%;
+  left: 10px;
+  content: "";
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 5px;
+}
 
 .product-device-2 {
   top: -25%;
@@ -56,6 +59,7 @@
   background-color: #e5e5e5;
 }
 
+
 /*
  * Extra utilities
  */
@@ -63,7 +67,6 @@
 .flex-equal > * {
   flex: 1;
 }
-
 @media (min-width: 768px) {
   .flex-md-equal > * {
     flex: 1;

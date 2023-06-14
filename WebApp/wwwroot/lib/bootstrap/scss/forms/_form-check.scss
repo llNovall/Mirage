@@ -27,11 +27,8 @@
 }
 
 .form-check-input {
-  --# {
-    $prefix
-  }
+  --#{$prefix}form-check-bg: #{$form-check-input-bg};
 
-  form-check-bg: #{$form-check-input-bg};
   width: $form-check-input-width;
   height: $form-check-input-width;
   margin-top: ($line-height-base - $form-check-input-width) * .5; // line-height minus check height
@@ -71,35 +68,17 @@
 
     &[type="checkbox"] {
       @if $enable-gradients {
-        --# {
-          $prefix
-        }
-
-        form-check-bg-image: #{escape-svg($form-check-input-checked-bg-image)}, var(--#{$prefix}gradient);
-      }
-      @else {
-        --# {
-          $prefix
-        }
-
-        form-check-bg-image: #{escape-svg($form-check-input-checked-bg-image)};
+        --#{$prefix}form-check-bg-image: #{escape-svg($form-check-input-checked-bg-image)}, var(--#{$prefix}gradient);
+      } @else {
+        --#{$prefix}form-check-bg-image: #{escape-svg($form-check-input-checked-bg-image)};
       }
     }
 
     &[type="radio"] {
       @if $enable-gradients {
-        --# {
-          $prefix
-        }
-
-        form-check-bg-image: #{escape-svg($form-check-radio-checked-bg-image)}, var(--#{$prefix}gradient);
-      }
-      @else {
-        --# {
-          $prefix
-        }
-
-        form-check-bg-image: #{escape-svg($form-check-radio-checked-bg-image)};
+        --#{$prefix}form-check-bg-image: #{escape-svg($form-check-radio-checked-bg-image)}, var(--#{$prefix}gradient);
+      } @else {
+        --#{$prefix}form-check-bg-image: #{escape-svg($form-check-radio-checked-bg-image)};
       }
     }
   }
@@ -109,18 +88,9 @@
     border-color: $form-check-input-indeterminate-border-color;
 
     @if $enable-gradients {
-      --# {
-        $prefix
-      }
-
-      form-check-bg-image: #{escape-svg($form-check-input-indeterminate-bg-image)}, var(--#{$prefix}gradient);
-    }
-    @else {
-      --# {
-        $prefix
-      }
-
-      form-check-bg-image: #{escape-svg($form-check-input-indeterminate-bg-image)};
+      --#{$prefix}form-check-bg-image: #{escape-svg($form-check-input-indeterminate-bg-image)}, var(--#{$prefix}gradient);
+    } @else {
+      --#{$prefix}form-check-bg-image: #{escape-svg($form-check-input-indeterminate-bg-image)};
     }
   }
 
@@ -129,6 +99,7 @@
     filter: none;
     opacity: $form-check-input-disabled-opacity;
   }
+
   // Use disabled attribute in addition of :disabled pseudo-class
   // See: https://github.com/twbs/bootstrap/issues/28247
   &[disabled],
@@ -153,11 +124,8 @@
   padding-left: $form-switch-padding-start;
 
   .form-check-input {
-    --# {
-      $prefix
-    }
+    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image)};
 
-    form-switch-bg: #{escape-svg($form-switch-bg-image)};
     width: $form-switch-width;
     margin-left: $form-switch-padding-start * -1;
     background-image: var(--#{$prefix}form-switch-bg);
@@ -166,29 +134,16 @@
     @include transition($form-switch-transition);
 
     &:focus {
-      --# {
-        $prefix
-      }
-
-      form-switch-bg: #{escape-svg($form-switch-focus-bg-image)};
+      --#{$prefix}form-switch-bg: #{escape-svg($form-switch-focus-bg-image)};
     }
 
     &:checked {
       background-position: $form-switch-checked-bg-position;
 
       @if $enable-gradients {
-        --# {
-          $prefix
-        }
-
-        form-switch-bg: #{escape-svg($form-switch-checked-bg-image)}, var(--#{$prefix}gradient);
-      }
-      @else {
-        --# {
-          $prefix
-        }
-
-        form-switch-bg: #{escape-svg($form-switch-checked-bg-image)};
+        --#{$prefix}form-switch-bg: #{escape-svg($form-switch-checked-bg-image)}, var(--#{$prefix}gradient);
+      } @else {
+        --#{$prefix}form-switch-bg: #{escape-svg($form-switch-checked-bg-image)};
       }
     }
   }
@@ -227,11 +182,7 @@
 @if $enable-dark-mode {
   @include color-mode(dark) {
     .form-switch .form-check-input:not(:checked):not(:focus) {
-      --# {
-        $prefix
-      }
-
-      form-switch-bg: #{escape-svg($form-switch-bg-image-dark)};
+      --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image-dark)};
     }
   }
 }

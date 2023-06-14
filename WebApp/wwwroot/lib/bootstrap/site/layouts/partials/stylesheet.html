@@ -18,7 +18,7 @@
 {{- $postcssOptions := dict "use" "autoprefixer" "noMap" true -}}
 
 {{ if eq hugo.Environment "production" -}}
-{{- $sassOptions = merge $sassOptions (dict "outputStyle" "compressed") -}}
+  {{- $sassOptions = merge $sassOptions (dict "outputStyle" "compressed") -}}
 {{- end -}}
 
 {{- $style := resources.Get "scss/docs.scss" | toCSS $sassOptions | postCSS $postcssOptions }}

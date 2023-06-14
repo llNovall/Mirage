@@ -56,46 +56,41 @@ $rfs-base-value-unit: unit($rfs-base-value);
   $sign: if($dividend > 0 and $divisor > 0 or $dividend < 0 and $divisor < 0, 1, -1);
   $dividend: abs($dividend);
   $divisor: abs($divisor);
-
   @if $dividend == 0 {
     @return 0;
   }
-
   @if $divisor == 0 {
     @error "Cannot divide by 0";
   }
-
   $remainder: $dividend;
   $result: 0;
   $factor: 10;
-
   @while ($remainder > 0 and $precision >= 0) {
     $quotient: 0;
-
     @while ($remainder >= $divisor) {
       $remainder: $remainder - $divisor;
       $quotient: $quotient + 1;
     }
-
     $result: $result * 10 + $quotient;
     $factor: $factor * .1;
     $remainder: $remainder * 10;
     $precision: $precision - 1;
-
     @if ($precision < 0 and $remainder >= $divisor * 5) {
       $result: $result + 1;
     }
   }
-
   $result: $result * $factor * $sign;
   $dividend-unit: unit($dividend);
   $divisor-unit: unit($divisor);
-  $unit-map: ( "px": 1px, "rem": 1rem, "em": 1em, "%": 1% );
-
+  $unit-map: (
+    "px": 1px,
+    "rem": 1rem,
+    "em": 1em,
+    "%": 1%
+  );
   @if ($dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit)) {
     $result: $result * map-get($unit-map, $dividend-unit);
   }
-
   @return $result;
 }
 
@@ -159,14 +154,14 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
     &.enable-rfs {
       @content;
     }
-  }
-  @else {
+  } @else {
     @content;
   }
 }
 
 // Internal mixin that adds enable classes to the selector if needed.
 @mixin _rfs-media-query-rule {
+
   @if $rfs-class == enable {
     @if $rfs-mode == min-media-query {
       @content;
@@ -186,7 +181,6 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
         @content;
       }
     }
-
     @include _rfs-media-query () {
       @content;
     }
@@ -216,8 +210,7 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
       @else if $unit == rem {
         // Convert to px if needed
         $val: $val + " " + if($rfs-unit == px, #{divide($value, $value * 0 + 1) * $rfs-rem-value}px, $value);
-      }
-      @else {
+      } @else {
         // If $value isn't a number (like inherit) or $value has a unit (not px or rem, like 1.5em) or $ is 0, just print the value
         $val: $val + " " + $value;
       }
@@ -239,16 +232,14 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
   @each $value in $values {
     @if $value == 0 {
       $val: $val + " 0";
-    }
-    @else {
+    } @else {
       // Cache $value unit
       $unit: if(type-of($value) == "number", unit($value), false);
 
       // If $value isn't a number (like inherit) or $value has a unit (not px or rem, like 1.5em) or $ is 0, just print the value
       @if not $unit or $unit != px and $unit != rem {
         $val: $val + " " + $value;
-      }
-      @else {
+      } @else {
         // Remove unit from $value for calculations
         $value: divide($value, $value * 0 + if($unit == px, 1, divide(1, $rfs-rem-value)));
 
@@ -299,6 +290,7 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
     @else {
       @include _rfs-rule () {
         #{$property}: if($rfs-mode == max-media-query, $val, $fluid-val);
+
         // Include safari iframe resize fix if needed
         min-width: if($rfs-safari-iframe-resize-bug-fix, (0 * 1vw), null);
       }

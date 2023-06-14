@@ -40,8 +40,7 @@
           </li>
         </ul>
       </div>
-      {{
- highlight (printf `<ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
+{{ highlight (printf `<ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
   <li class="nav-item" role="presentation">
     <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</button>
   </li>
@@ -52,8 +51,7 @@
     <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Contact</button>
   </li>
 </ul>
-`) "html" ""
-      }}
+`) "html" "" }}
       <p class="d-flex justify-content-start mb-md-0">
         <a href="/docs/{{ .Site.Params.docs_version }}/examples#snippets" class="icon-link icon-link-hover fw-semibold">
           Explore customized components
@@ -64,8 +62,8 @@
     <div class="col-lg-6">
       <h3 class="fw-semibold">Create and extend utilities</h3>
       <p>Use Bootstrap's utility API to modify any of our included utilities or create your own custom utilities for any project. Import Bootstrap first, then use Sass map functions to modify, add, or remove utilities.</p>
-      {{
- highlight (printf `@import "bootstrap/scss/bootstrap";
+{{ highlight (printf `@import "bootstrap/scss/bootstrap";
+
 $utilities: map-merge(
   $utilities,
   (
@@ -77,8 +75,7 @@ $utilities: map-merge(
     )
   )
 );
-`) "scss" ""
-      }}
+`) "scss" "" }}
 
       <p class="d-flex justify-content-start mb-md-0">
         <a href="/docs/{{ .Site.Params.docs_version }}/utilities/api/" class="icon-link icon-link-hover fw-semibold mb-3">

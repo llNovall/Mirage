@@ -20,6 +20,7 @@
       %responsive-container-#{$breakpoint} {
         max-width: $container-max-width;
       }
+
       // Extend each breakpoint which is smaller or equal to the current breakpoint
       $extend-breakpoint: true;
 
@@ -28,6 +29,7 @@
           .container#{breakpoint-infix($name, $grid-breakpoints)} {
             @extend %responsive-container-#{$breakpoint};
           }
+
           // Once the current breakpoint is reached, stop extending
           @if ($breakpoint == $name) {
             $extend-breakpoint: false;

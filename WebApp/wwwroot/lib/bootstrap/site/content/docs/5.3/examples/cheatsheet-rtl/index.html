@@ -123,7 +123,7 @@ direction: rtl
         {{< example show_markup="false" >}}
         <blockquote class="blockquote">
           <p>إقتباس مبهر، موضوع في عنصر blockquote</p>
-          <footer class="blockquote-footer">شخص مشهور في <cite title="عنوان المصدر"> عنوان المصدر </cite></footer>
+          <footer class="blockquote-footer">شخص مشهور في <cite title= "عنوان المصدر"> عنوان المصدر </cite></footer>
         </blockquote>
         {{< /example >}}
 
@@ -133,8 +133,7 @@ direction: rtl
           <li>بالرغم من أنها مصممة كي لا تظهر كذلك.</li>
           <li>إلا أنها مجهزة كـ قائمة خلف الكواليس</li>
           <li>هذا التصميم ينطبق فقد على القائمة الرئيسية</li>
-          <li>
-            القوائم الفرعية
+          <li>القوائم الفرعية
             <ul>
               <li>لا تتأثر بهذا التصميم</li>
               <li>فهي تظهر عليها علامات الترقيم</li>
@@ -180,31 +179,31 @@ direction: rtl
         {{< example show_markup="false" >}}
         <table class="table table-striped">
           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">الاسم الاول</th>
-              <th scope="col">الكنية</th>
-              <th scope="col">الاسم المستعار</th>
-            </tr>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">الاسم الاول</th>
+            <th scope="col">الكنية</th>
+            <th scope="col">الاسم المستعار</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td><bdo lang="en" dir="ltr">@fat</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
-            </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td><bdo lang="en" dir="ltr">@fat</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
+          </tr>
           </tbody>
         </table>
         {{< /example >}}
@@ -212,31 +211,31 @@ direction: rtl
         {{< example show_markup="false" >}}
         <table class="table table-dark table-borderless">
           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">الاسم الاول</th>
-              <th scope="col">الكنية</th>
-              <th scope="col">الاسم المستعار</th>
-            </tr>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">الاسم الاول</th>
+            <th scope="col">الكنية</th>
+            <th scope="col">الاسم المستعار</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td><bdo lang="en" dir="ltr">@fat</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
-            </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td><bdo lang="en" dir="ltr">@fat</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
+          </tr>
           </tbody>
         </table>
         {{< /example >}}
@@ -244,27 +243,27 @@ direction: rtl
         {{< example show_markup="false" >}}
         <table class="table table-hover">
           <thead>
-            <tr>
-              <th scope="col">Class</th>
-              <th scope="col">عنوان</th>
-              <th scope="col">عنوان</th>
-            </tr>
+          <tr>
+            <th scope="col">Class</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">عنوان</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">Default</th>
-              <td>خلية</td>
-              <td>خلية</td>
-            </tr>
-            {{< table.inline >}}
-            {{- range (index $.Site.Data "theme-colors") }}
-            <tr class="table-{{ .name }}">
-              <th scope="row">{{ .name | title }}</th>
-              <td>خلية</td>
-              <td>خلية</td>
-            </tr>
-            {{- end -}}
-            {{< /table.inline >}}
+          <tr>
+            <th scope="row">Default</th>
+            <td>خلية</td>
+            <td>خلية</td>
+          </tr>
+          {{< table.inline >}}
+          {{- range (index $.Site.Data "theme-colors") }}
+          <tr class="table-{{ .name }}">
+            <th scope="row">{{ .name | title }}</th>
+            <td>خلية</td>
+            <td>خلية</td>
+          </tr>
+          {{- end -}}
+          {{< /table.inline >}}
           </tbody>
         </table>
         {{< /example >}}
@@ -272,31 +271,31 @@ direction: rtl
         {{< example show_markup="false" >}}
         <table class="table table-sm table-bordered">
           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">الاسم الاول</th>
-              <th scope="col">الكنية</th>
-              <th scope="col">الاسم المستعار</th>
-            </tr>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">الاسم الاول</th>
+            <th scope="col">الكنية</th>
+            <th scope="col">الاسم المستعار</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td><bdo lang="en" dir="ltr">@fat</bdo></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
-            </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td><bdo lang="en" dir="ltr">@mdo</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td><bdo lang="en" dir="ltr">@fat</bdo></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td><bdo lang="en" dir="ltr">@twitter</bdo></td>
+          </tr>
           </tbody>
         </table>
         {{< /example >}}
@@ -1370,7 +1369,7 @@ direction: rtl
       <div>
         {{< example show_markup="false" >}}
         <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="عنوان الصندوق المنبثق" data-bs-content="وإليك بعض المحتويات الرائعة. إنه آسر للغاية. أليس كذلك؟">
-          انقر لعرض/إخفاء الصندوق المنبثق
+        انقر لعرض/إخفاء الصندوق المنبثق
         </button>
         {{< /example >}}
 
