@@ -17,14 +17,23 @@ namespace WebApp.Models.Contact
 
         [Required]
         [Display(Name = "Subject")]
-        [MinLength(5)]
+        [MinLength(5, ErrorMessage = "The Subject must be longer than 5 characters.")]
         [DataType(DataType.Text)]
         public string Subject { get; set; } = null!;
 
         [Required]
         [Display(Name = "Message")]
-        [MinLength(5)]
+        [MinLength(5, ErrorMessage = "The Message must be longer than 5 characters.")]
         [DataType(DataType.Text)]
         public string Message { get; set; } = null!;
+
+        public EmailSendStatus EmailSendStatus { get; set; }
+    }
+
+    public enum EmailSendStatus
+    {
+        Pending,
+        Success,
+        Failed
     }
 }

@@ -4,6 +4,7 @@ using EFDataAccess.Contexts;
 using EFDataAccess.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using System.Net;
@@ -161,6 +162,7 @@ builder.Services.AddScoped<IAuthorizationHandler, SameAuthorIDHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, SameAuthorCommentHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, SameAuthorBlogPostHandler>();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 #endregion Add Services
 
