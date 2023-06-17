@@ -36,7 +36,7 @@ namespace WebApp.Controllers
                 if (string.IsNullOrEmpty(_contactEmail))
                     return View("Index", model);
 
-                bool isSent = await _emailService.SendEmailAsync(_contactEmail, model.EmailAddress, $"{model.Name}", model.Subject, model.Message);
+                bool isSent = await _emailService.SendEmailAsync(_contactEmail, model.EmailAddress, $"Name : {model.Name} - Email : {model.EmailAddress}", model.Subject, model.Message);
 
                 if (isSent)
                     model.EmailSendStatus = EmailSendStatus.Success;
