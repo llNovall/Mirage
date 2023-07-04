@@ -125,12 +125,16 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("CommentEdit",
         policy => policy.RequireAuthenticatedUser()
         .AddRequirements(new SameAuthorRequirement())
-        .RequireRole("member"));
+        .RequireRole("member", "blogger", "admin"));
 
     options.AddPolicy("CommentDelete",
         policy => policy.RequireAuthenticatedUser()
         .AddRequirements(new SameAuthorRequirement())
-        .RequireRole("member", "admin"));
+        .RequireRole("member", "blogger", "admin"));
+
+    options.AddPolicy("CommentDeleteAdmin",
+        policy => policy.RequireAuthenticatedUser()
+        .RequireRole("admin"));
 
     options.AddPolicy("CommentCreate",
         policy => policy.RequireAuthenticatedUser().RequireRole("member", "blogger", "admin"));
@@ -146,7 +150,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("BlogDelete",
         policy => policy.RequireAuthenticatedUser()
         .AddRequirements(new SameAuthorRequirement())
-        .RequireRole("blogger", "admin"));
+        .RequireRole("blogger"));
 
     options.AddPolicy("BlogCreate",
         policy => policy.RequireAuthenticatedUser()

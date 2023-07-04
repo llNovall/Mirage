@@ -54,11 +54,13 @@ namespace WebApp.Controllers.Blog
                     return Redirection(returnUrl);
                 }
 
+                Author? author = await _db.AuthorRepository.FindByIdAsync(userId);
+
 #pragma warning disable CS8601 // Possible null reference assignment.
                 Comment comment = new()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    AuthorId = userId,
+                    Author = author,
                     BlogId = model.BlogId,
                     BodyContent = model.BodyContent,
                     PostedOn = DateTime.UtcNow,
@@ -153,8 +155,9 @@ namespace WebApp.Controllers.Blog
                 }
 
                 var authorizationResult = await _authorizationService.AuthorizeAsync(User, commentFromDb, "CommentDelete");
+                var authorizationAdminResult = await _authorizationService.AuthorizeAsync(User, commentFromDb, "CommentDeleteAdmin");
 
-                if (!authorizationResult.Succeeded)
+                if (!authorizationResult.Succeeded & !authorizationAdminResult.Succeeded)
                 {
                     _logger.LogWarning(_eventId, "COMMENT DELETE FAILED", $"{userId} attempted to delete comment {model.CommentId} without proper authorization.");
                     return Redirection(returnUrl);
