@@ -158,6 +158,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("BlogCreate",
         policy => policy.RequireAuthenticatedUser()
         .RequireRole("blogger"));
+
+    options.AddPolicy("AdminPageView",
+        policy => policy.RequireAuthenticatedUser().RequireRole("admin"));
 });
 
 #endregion Authorization

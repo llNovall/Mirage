@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService;
+
+
+@{
+    var adminPageViewResult = await AuthorizationService.AuthorizeAsync(User, "AdminPageView");
+
+    if (!adminPageViewResult.Succeeded)
+        return;
+}
+
+<a asp-action="AdminView" asp-controller="Admin" class="nav-link">Admin Page</a> 
