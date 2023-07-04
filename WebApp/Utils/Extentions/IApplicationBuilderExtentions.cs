@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Services;
 using EFDataAccess.Contexts;
+using EFDataAccess.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -103,10 +105,20 @@ namespace WebApp.Utils.Extentions
 
                 if (userManager == null)
                     return;
+
+                IDBService? dBService = serviceScope.ServiceProvider.GetService<IDBService>();
+
+                if (dBService == null)
+                    return;
+
                 IdentityUser? admin = await userManager.FindByNameAsync(username);
 
                 if (admin != null)
-                    return;
+                {
+                    Author? adminAuthor = await dBService.AuthorRepository.FindByIdAsync(Guid.Parse(admin.Id));
+                    if (adminAuthor != null)
+                        return;
+                }
 
                 admin = new IdentityUser(username);
 
@@ -114,6 +126,14 @@ namespace WebApp.Utils.Extentions
                 var result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                     await userManager.AddToRoleAsync(admin, "admin");
+
+                Author author = new()
+                {
+                    Id = admin.Id,
+                    Username = username
+                };
+
+                await dBService.AuthorRepository.AddAsync(author);
             }
         }
     }
