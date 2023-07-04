@@ -287,8 +287,9 @@ namespace WebApp.Controllers.Blog
             }
 
             var authorizeResult = await _authorizationService.AuthorizeAsync(User, requestedPost, "BlogDelete");
+            var authorizeAdminResult = await _authorizationService.AuthorizeAsync(User, requestedPost, "BlogDeleteAdmin");
 
-            if (!authorizeResult.Succeeded)
+            if (!authorizeResult.Succeeded & !authorizeAdminResult.Succeeded)
             {
                 _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"User with id {userId} not authorized to delete blog post with id - {blogPostId}.");
                 return RedirectToRoute("Index", "Home");

@@ -1,11 +1,16 @@
 ﻿@model BlogPost
 
 @{
-    var authorizeResult = await AuthorizationService.AuthorizeAsync(User, Model, "BlogDelete");
+    var authorizeResultAdmin = await AuthorizationService.AuthorizeAsync(User, Model, "BlogDeleteAdmin");
 
-    if (!authorizeResult.Succeeded)
-        return;
+    if(!authorizeResultAdmin.Succeeded)
+    {
+        var authorizeResultBlogger = await AuthorizationService.AuthorizeAsync(User, Model, "BlogDelete");
 
+        if (!authorizeResultBlogger.Succeeded)
+            return;
+    }
+   
     <!-- Button trigger modal -->
     <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#blogDeleteModal">
         Delete

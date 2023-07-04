@@ -152,6 +152,9 @@ builder.Services.AddAuthorization(options =>
         .AddRequirements(new SameAuthorRequirement())
         .RequireRole("blogger"));
 
+    options.AddPolicy("BlogDeleteAdmin",
+        policy => policy.RequireAuthenticatedUser().RequireRole("admin"));
+
     options.AddPolicy("BlogCreate",
         policy => policy.RequireAuthenticatedUser()
         .RequireRole("blogger"));
