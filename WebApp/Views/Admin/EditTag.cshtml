@@ -1,0 +1,35 @@
+﻿@model AdminEditTagModel
+
+<div class="row mt-4">
+    <div class="col">
+        <h2 class="m-0 small-caps">Edit Tag - @Model.TagName</h2>
+        <hr class="border-2" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <form method="post" id="tagEdit">
+            <div asp-validation-summary="All"> </div>
+
+            <div class="mb-3">
+                <label class="form-label d-block bg-dark text-white ps-2 fs-4 small-caps m-0" asp-for="TagId"></label>
+                <input class="form-control rounded-0" readonly asp-for="TagId">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label d-block bg-dark text-white ps-2 fs-4 small-caps m-0" asp-for="TagName"></label>
+                <input class="form-control rounded-0" readonly asp-for="TagName">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label d-block bg-dark text-white ps-2 fs-4 small-caps m-0" asp-for="TagDescription"></label>
+                <textarea class="form-control rounded-0" asp-for="TagDescription"> </textarea>
+            </div>
+
+            <button class="btn btn-primary small-caps" asp-action="ManageTags" asp-controller="Admin">Back</button>
+            <button type="submit" class="btn btn-primary small-caps" asp-action="EditTag" asp-controller="Admin">Edit</button>
+        </form>
+        
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model AdminCreateTagModel
+@{
+    ViewData["Title"] = "Add Tag";
+}
+<div class="row mt-4">
+    <div class="col">
+        <h2 class="m-0 small-caps">Add Tag</h2>
+        <hr class="border-2" />
+    </div>
+</div>
+
+<div class="row">
+    <form method="post" id="createTag">
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label class="form-label d-block bg-dark text-white ps-2 fs-4 small-caps m-0" asp-for="TagName"></label>
+            <input class="form-control rounded-0" asp-for="TagName">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label d-block bg-dark text-white ps-2 fs-4 small-caps m-0" asp-for="TagDescription"></label>
+            <input class="form-control rounded-0" asp-for="TagDescription">
+        </div>
+
+        <button class="btn btn-primary small-caps" asp-action="ManageTags" asp-controller="Admin">Back</button>
+        <button class="btn btn-primary small-caps" type="submit" asp-action="CreateTag" asp-controller="Admin">Create</button>
+
+    </form>
+    
+
+</div>

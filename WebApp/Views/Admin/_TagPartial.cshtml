@@ -1,0 +1,15 @@
+﻿@model AdminManageTagsModel.TagData
+<div class="row">
+
+    <div class="col-6">
+        <p>@Model.TagName</p>
+    </div>
+    <div class="col-3 text-center">
+        <a class="btn btn-secondary rounded-1 border-2 border-secondary-subtle" asp-action="EditTag" asp-controller="Admin" asp-route-tagId="@Model.TagId">Edit</a>
+    </div>
+
+    <div class="col-3 text-center">
+        <a class="btn btn-danger rounded-1 border-2 border-danger-subtle" asp-action="DeleteTag" asp-controller="Admin" asp-route-tagId="@Model.TagId">Delete</a>
+    </div>
+
+</div>

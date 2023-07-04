@@ -1,0 +1,50 @@
+﻿@model AdminManageTagsModel
+
+@{
+    ViewData["Title"] = "Manage Tags";
+}
+
+<div class="row mt-4">
+    <div class="col">
+        <h2 class="m-0 small-caps">Manage Tags</h2>
+        <hr class="border-2" />
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col text-end">
+        <a class="btn btn-primary rounded-1 border-2 border-primary-subtle" asp-action="CreateTag" asp-controller="Admin"><i class="bi bi-plus-circle"></i> Create Tag </a>
+    </div>
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-6 text-center small-caps">
+        <p class="ms-2">Tag Name</p>
+    </div>
+    <div class="col-3 text-center small-caps">
+        <p class="">Action - Edit</p>
+    </div>
+
+    <div class="col-3 text-center small-caps">
+        <p class="">Action - Delete</p>
+    </div>
+
+</div>
+
+<hr class="border-1 mt-0" />
+
+@{
+    for (int i = 0; i < Model.Tags.Count; i++)
+    {
+        <partial name="_TagPartial" model="Model.Tags[i]" />
+        <hr class="border-1">
+    }
+}
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary rounded-1 border-2 border-primary-subtle" asp-action="AdminView" asp-controller="Admin">Back</a>
+    </div>
+</div>

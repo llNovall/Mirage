@@ -1,7 +1,7 @@
 ﻿using Domain.DataTransferClasses;
 using Domain.Entities;
 
-namespace WebApp.Models.Tag
+namespace WebApp.Models.Blog
 {
     public class TagIndexViewModel
     {
