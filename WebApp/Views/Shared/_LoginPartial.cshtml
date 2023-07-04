@@ -3,7 +3,6 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-
 <div class="row justify-content-end text-center text-md-end">
    
 @{
@@ -11,7 +10,24 @@
     {
         <div class="col btn-group">
             <button type="button" class="btn btn-secondary rounded-0 dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" >
-                    Signed In as @UserManager.GetUserName(User)
+                    @{
+                        IdentityUser? user = await UserManager.GetUserAsync(User);
+
+                        if(user != null)
+                        {
+                            var identityRoles = await UserManager.GetRolesAsync(user);
+
+                            if(identityRoles.Count == 0)
+                            {
+                                <span>Signed In as @UserManager.GetUserName(User)</span>
+                            }
+                            else
+                            {
+                                <span>Signed In as @UserManager.GetUserName(User) (@identityRoles[0]) </span>
+                            }
+
+                        }
+                    }
             </button>
 
             <ul class="dropdown-menu dropdown-menu-end bg-secondary text-white text-center">
