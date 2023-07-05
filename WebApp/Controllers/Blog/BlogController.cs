@@ -114,7 +114,7 @@ namespace WebApp.Controllers.Blog
 
                 if (author == null)
                 {
-                    _logger.LogError("BLOG CREATE FAILED", $"Failed to find author with id - {userId}.");
+                    _logger.LogError("BLOG CREATE FAILED", $"Failed to find author with id.");
                     return View(model);
                 }
 
@@ -135,7 +135,7 @@ namespace WebApp.Controllers.Blog
 
                 if (result <= 0)
                 {
-                    _logger.LogError("BLOG CREATE FAILED", $"Failed to create blog by user - {userId}.");
+                    _logger.LogError("BLOG CREATE FAILED", $"Failed to create blog by user.");
                     return View(model);
                 }
 
@@ -210,7 +210,7 @@ namespace WebApp.Controllers.Blog
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    _logger.LogWarning(_eventId, "BLOG EDIT FAILED", $"Failed to find userId to edit blog with id - {model.BlogId}.");
+                    _logger.LogWarning(_eventId, "BLOG EDIT FAILED", $"Failed to find userId to edit blog.");
                     return View(model);
                 }
 
@@ -218,7 +218,7 @@ namespace WebApp.Controllers.Blog
 
                 if (blogFromDb == null)
                 {
-                    _logger.LogCritical(_eventId, "BLOG EDIT FAILED", $"Failed to find blog - {model.BlogId}.");
+                    _logger.LogCritical(_eventId, "BLOG EDIT FAILED", $"Failed to find blog.");
                     return View(model);
                 }
 
@@ -226,7 +226,7 @@ namespace WebApp.Controllers.Blog
 
                 if (!authorizationResult.Succeeded)
                 {
-                    _logger.LogWarning(_eventId, "BLOG EDIT FAILED", $"{userId} attempted to update comment {model.BlogId} without proper authorization.");
+                    _logger.LogWarning(_eventId, "BLOG EDIT FAILED", $"Attempted to update comment without proper authorization.");
                     return Forbid();
                 }
 
@@ -251,9 +251,9 @@ namespace WebApp.Controllers.Blog
                 int result = await _db.PostRepository.UpdateAsync(blogFromDb);
 
                 if (result <= 0)
-                    _logger.LogCritical(_eventId, "BLOG EDIT FAILED", $"Database failed to update blog - {model.BlogId}.");
+                    _logger.LogCritical(_eventId, "BLOG EDIT FAILED", $"Database failed to update blog.");
                 else
-                    _logger.LogInformation(_eventId, "BLOG EDIT SUCCESS", $"Successfully updated blog - {model.BlogId}.");
+                    _logger.LogInformation(_eventId, "BLOG EDIT SUCCESS", $"Successfully updated blog.");
 
                 return RedirectToAction("Index", new { blogPostId = blogFromDb.Id });
             }
@@ -268,7 +268,7 @@ namespace WebApp.Controllers.Blog
 
             if (string.IsNullOrEmpty(userId))
             {
-                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find userId to delete blog with id - {blogPostId}.");
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find userId to delete blog with id.");
                 return RedirectToRoute("Index", "Home");
             }
 
@@ -282,7 +282,7 @@ namespace WebApp.Controllers.Blog
 
             if (requestedPost == null)
             {
-                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find blog post with id - {blogPostId}.");
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to find blog post with id.");
                 return RedirectToRoute("Index", "Home");
             }
 
@@ -291,16 +291,16 @@ namespace WebApp.Controllers.Blog
 
             if (!authorizeResult.Succeeded & !authorizeAdminResult.Succeeded)
             {
-                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"User with id {userId} not authorized to delete blog post with id - {blogPostId}.");
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"User with id {userId} not authorized to delete blog post with id.");
                 return RedirectToRoute("Index", "Home");
             }
 
             int result = await _db.PostRepository.RemoveAsync(requestedPost);
 
             if (result > 0)
-                _logger.LogInformation(_eventId, "BLOG DELETE SUCCESS", $"User {userId} successfully deleted blog post with id - {blogPostId}.");
+                _logger.LogInformation(_eventId, "BLOG DELETE SUCCESS", $"User successfully deleted blog post with id.");
             else
-                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to delete from db blog post with id - {blogPostId}.");
+                _logger.LogWarning(_eventId, "BLOG DELETE FAILED", $"Failed to delete from db blog post with id.");
 
             return RedirectToAction("Index", "Home");
         }

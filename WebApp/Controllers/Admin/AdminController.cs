@@ -43,7 +43,7 @@ namespace WebApp.Controllers.Admin
 
             if (tag == null)
             {
-                _logger.LogWarning("TAG EDIT VIEW FAILED", $"Failed to find tag with id {tagId}.");
+                _logger.LogWarning("TAG EDIT VIEW FAILED", $"Failed to find tag.");
                 return RedirectToAction("ManageTags");
             }
 
@@ -68,7 +68,7 @@ namespace WebApp.Controllers.Admin
 
                 if (tag == null)
                 {
-                    _logger.LogWarning("TAG EDIT FAILED", $"Failed to find tag with id {model.TagId}.");
+                    _logger.LogWarning("TAG EDIT FAILED", $"Failed to find tag.");
                     return RedirectToAction("ManageTags");
                 }
 
@@ -78,7 +78,7 @@ namespace WebApp.Controllers.Admin
 
                 if (result == 0)
                 {
-                    _logger.LogWarning("TAG EDIT FAILED", $"Failed to edit tag with id {model.TagId} due to database error.");
+                    _logger.LogWarning("TAG EDIT FAILED", $"Failed to edit tag due to database error.");
                 }
 
                 return RedirectToAction("ManageTags");
@@ -93,7 +93,7 @@ namespace WebApp.Controllers.Admin
         {
             if (string.IsNullOrEmpty(tagId))
             {
-                _logger.LogWarning("TAG DELETE FAILED", $"Failed to delete tag {tagId}.");
+                _logger.LogWarning("TAG DELETE FAILED", $"Failed to delete tag.");
                 return RedirectToAction("AdminView");
             }
 
@@ -101,7 +101,7 @@ namespace WebApp.Controllers.Admin
 
             if (tag == null)
             {
-                _logger.LogWarning("TAG DELETE FAILED", $"Failed to find tag with id {tagId}.");
+                _logger.LogWarning("TAG DELETE FAILED", $"Failed to find tag.");
                 return RedirectToAction("AdminView");
             }
 
@@ -109,7 +109,7 @@ namespace WebApp.Controllers.Admin
 
             if (result == 0)
             {
-                _logger.LogWarning("TAG DELETE FAILED", $"Failed to delete tag with id {tagId} due to database error.");
+                _logger.LogWarning("TAG DELETE FAILED", $"Failed to delete tag due to database error.");
                 return RedirectToAction("AdminView");
             }
 

@@ -35,7 +35,7 @@ namespace WebApp.Controllers.Blog
 
             if (tag == null)
             {
-                _logger.LogWarning(_eventId, "TAG INDEX VIEW FAILED", $"Failed to find tag with id - {tagId}.");
+                _logger.LogWarning(_eventId, "TAG INDEX VIEW FAILED", $"Failed to find tag.");
                 return RedirectToAction("Index", "Home");
             }
 

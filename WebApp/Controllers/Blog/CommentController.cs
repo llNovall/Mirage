@@ -36,7 +36,7 @@ namespace WebApp.Controllers.Blog
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    _logger.LogWarning(_eventId, "COMMENT CREATE FAILED", $"Failed to find userId to create comment on blog post {model.BlogId}.");
+                    _logger.LogWarning(_eventId, "COMMENT CREATE FAILED", $"Failed to find userId to create comment on blog post.");
                     return Redirection(returnUrl);
                 }
 
@@ -44,13 +44,13 @@ namespace WebApp.Controllers.Blog
 
                 if (!authorizationResult.Succeeded)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT CREATE FAILED", $"{userId} attempted to create comment on blog post {model.BlogId} without proper authorization.");
+                    _logger.LogWarning(_eventId, "COMMENT CREATE FAILED", $"Attempted to create comment on blog post without proper authorization.");
                     return Redirection(returnUrl);
                 }
 
                 if (string.IsNullOrEmpty(model.BodyContent) | (model.BodyContent?.Length < 5 && model.BodyContent?.Length > 500))
                 {
-                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to create comment on blog post{model.BlogId}.");
+                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to create comment on blog post.");
                     return Redirection(returnUrl);
                 }
 
@@ -70,9 +70,9 @@ namespace WebApp.Controllers.Blog
                 int result = await _db.CommentRepository.AddAsync(comment);
 
                 if (result <= 0)
-                    _logger.LogCritical(_eventId, "COMMENT CREATE FAILED", $"Database failed to create comment on blog post {model.BlogId}.");
+                    _logger.LogCritical(_eventId, "COMMENT CREATE FAILED", $"Database failed to create comment on blog post.");
                 else
-                    _logger.LogInformation(_eventId, "COMMENT CREATE SUCCESS", $"Successfully created comment {comment.Id} on blog post {model.BlogId}.");
+                    _logger.LogInformation(_eventId, "COMMENT CREATE SUCCESS", $"Successfully created comment on blog post.");
             }
 
             return Redirection(returnUrl);
@@ -89,7 +89,7 @@ namespace WebApp.Controllers.Blog
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    _logger.LogWarning(_eventId, "COMMENT EDIT FAILED", $"Failed to find userId to edit comment {model.CommentId}.");
+                    _logger.LogWarning(_eventId, "COMMENT EDIT FAILED", $"Failed to find userId to edit comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -97,7 +97,7 @@ namespace WebApp.Controllers.Blog
 
                 if (commentFromDb == null)
                 {
-                    _logger.LogCritical(_eventId, "COMMENT EDIT FAILED", $"Failed to find comment {model.CommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT EDIT FAILED", $"Failed to find comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -105,13 +105,13 @@ namespace WebApp.Controllers.Blog
 
                 if (!authorizationResult.Succeeded)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT EDIT FAILED", $"{userId} attempted to update comment {model.CommentId} without proper authorization.");
+                    _logger.LogWarning(_eventId, "COMMENT EDIT FAILED", $"Attempted to update comment without proper authorization.");
                     return Redirection(returnUrl);
                 }
 
                 if (model.BodyContent.Length < 5 && model.BodyContent.Length > 500)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to update comment {model.CommentId}.");
+                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to update comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -122,9 +122,9 @@ namespace WebApp.Controllers.Blog
                     int result = await _db.CommentRepository.UpdateAsync(commentFromDb);
 
                     if (result <= 0)
-                        _logger.LogCritical(_eventId, "COMMENT EDIT FAILED", $"Database failed to update {model.CommentId}.");
+                        _logger.LogCritical(_eventId, "COMMENT EDIT FAILED", $"Database failed to update.");
                     else
-                        _logger.LogInformation(_eventId, "COMMENT EDIT SUCCESS", $"Successfully updated comment {model.CommentId}.");
+                        _logger.LogInformation(_eventId, "COMMENT EDIT SUCCESS", $"Successfully updated comment.");
                 }
             }
 
@@ -142,7 +142,7 @@ namespace WebApp.Controllers.Blog
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    _logger.LogWarning(_eventId, "COMMENT DELETE FAILED", $"Failed to find userId to delete comment {model.CommentId}.");
+                    _logger.LogWarning(_eventId, "COMMENT DELETE FAILED", $"Failed to find userId to delete comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -150,7 +150,7 @@ namespace WebApp.Controllers.Blog
 
                 if (commentFromDb == null)
                 {
-                    _logger.LogCritical(_eventId, "COMMENT DELETE FAILED", $"Failed to find comment {model.CommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT DELETE FAILED", $"Failed to find comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -159,16 +159,16 @@ namespace WebApp.Controllers.Blog
 
                 if (!authorizationResult.Succeeded & !authorizationAdminResult.Succeeded)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT DELETE FAILED", $"{userId} attempted to delete comment {model.CommentId} without proper authorization.");
+                    _logger.LogWarning(_eventId, "COMMENT DELETE FAILED", $"{userId} attempted to delete comment without proper authorization.");
                     return Redirection(returnUrl);
                 }
 
                 int result = await _db.CommentRepository.RemoveAsync(commentFromDb);
 
                 if (result == 0)
-                    _logger.LogCritical(_eventId, "COMMENT DELETE FAILED", $"Database failed to delete comment {model.CommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT DELETE FAILED", $"Database failed to delete comment.");
                 else
-                    _logger.LogInformation(_eventId, "COMMENT DELETE SUCCESS", $"Successfully deleted comment {model.CommentId}.");
+                    _logger.LogInformation(_eventId, "COMMENT DELETE SUCCESS", $"Successfully deleted comment.");
             }
 
             return Redirection(returnUrl);
@@ -185,7 +185,7 @@ namespace WebApp.Controllers.Blog
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Failed to find userId to reply to comment {model.ReplyCommentId}.");
+                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Failed to find userId to reply to comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -193,7 +193,7 @@ namespace WebApp.Controllers.Blog
 
                 if (!authorizationResult.Succeeded)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"{userId} attempted to reply to comment {model.ReplyCommentId} without proper authorization.");
+                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"{userId} attempted to reply to comment without proper authorization.");
                     return Redirection(returnUrl);
                 }
 
@@ -201,7 +201,7 @@ namespace WebApp.Controllers.Blog
 
                 if (author == null)
                 {
-                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Failed to find author profile for user {userId} to reply to comment {model.ReplyCommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Failed to find author profile for user to reply to comment {model.ReplyCommentId}.");
                     return Redirection(returnUrl);
                 }
 
@@ -209,7 +209,7 @@ namespace WebApp.Controllers.Blog
 
                 if (commentToReply == null)
                 {
-                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Failed to find comment {model.ReplyCommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Failed to find comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -225,7 +225,7 @@ namespace WebApp.Controllers.Blog
 
                 if (model.BodyContent.Length < 5 && model.BodyContent.Length > 500)
                 {
-                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to reply to comment {model.ReplyCommentId}.");
+                    _logger.LogWarning(_eventId, "COMMENT REPLY FAILED", $"Comment is too short or long to reply to comment.");
                     return Redirection(returnUrl);
                 }
 
@@ -239,9 +239,9 @@ namespace WebApp.Controllers.Blog
                 //int resultAdd = await _db.CommentRepository.AddAsync(comment);
                 int resultUpdate = await _db.CommentRepository.UpdateAsync(commentToReply);
                 if (resultUpdate <= 0)
-                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Database failed to add reply to comment {model.ReplyCommentId}.");
+                    _logger.LogCritical(_eventId, "COMMENT REPLY FAILED", $"Database failed to add reply to comment.");
                 else
-                    _logger.LogInformation(_eventId, "COMMENT REPLY SUCCESS", $"Successfully replied to comment {model.ReplyCommentId}.");
+                    _logger.LogInformation(_eventId, "COMMENT REPLY SUCCESS", $"Successfully replied to comment.");
             }
 
             return Redirection(returnUrl);
